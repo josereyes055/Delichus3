@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="5">
+        <include layout="@layout/pasos_menu"></include>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_weight="1">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="36dp"
+            android:textColor="@color/naranja"
+            android:text="tipo"
+            android:id="@+id/paso_tipo"
+            android:layout_gravity="center" />
+
+            <ImageButton
+                android:src="@drawable/cronometro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cronometro"
+                android:paddingRight="20dp"
+                android:background="@null"
+                android:layout_gravity="right"
+                android:layout_marginTop="-43dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:textSize="10dp"
+            android:textColor="@color/naranja"
+            android:layout_height="wrap_content"
+            android:text="tiempo"
+            android:id="@+id/paso_tiempo"
+            android:paddingRight="20dp"
+            android:layout_gravity="right" />
+
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="250dp"
+            android:src="@drawable/cocer"
+            android:id="@+id/paso_imagen"
+            android:layout_marginTop="-20dp"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:padding="10dp"
+            android:gravity="center"
+            android:textSize="30dp"
+            android:maxHeight="150px"
+            android:layout_height="wrap_content"
+            android:text="descripcion"
+            android:id="@+id/paso_descripcion"
+            android:layout_gravity="center_horizontal" />
+
+        <ImageButton
+            android:src="@drawable/camara"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tomar_foto"
+            android:paddingRight="20dp"
+            android:background="@null"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:layout_gravity="right" />
+
+        <!--<ImageView
+            android:layout_width="300px"
+            android:layout_height="200px"
+            android:src="@drawable/imagen_paso"
+            android:id="@+id/imageView"
+            android:layout_gravity="center_horizontal" />-->
+
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="300px"
+                    android:layout_height="200px"
+                    android:text="Button1" />
+
+                <Button
+                    android:layout_width="300px"
+                    android:layout_height="200px"
+                    android:text="Button2" />
+
+                <Button
+                    android:layout_width="300px"
+                    android:layout_height="200px"
+                    android:text="Button3" />
+
+                <Button
+                    android:layout_width="300px"
+                    android:layout_height="200px"
+                    android:text="Button4" />
+
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>
