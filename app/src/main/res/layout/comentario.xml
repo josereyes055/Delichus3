@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/comentario_otro_usuario"
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="100dp"
+            android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
             android:textSize="18dp"
             android:lineSpacingExtra="5dp"

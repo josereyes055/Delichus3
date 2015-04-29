@@ -35,6 +35,7 @@
             android:layout_height="wrap_content"
             android:textSize="20dp"
             android:text="compartida por: "/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,6 +55,66 @@
         android:id="@+id/receta_rating"/>
 
 
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:paddingTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/dificultad_facil"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fácil"
+            android:layout_marginRight="20dp"
+            android:id="@+id/dificultad_receta"
+            android:textSize="18dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:src="@drawable/tiempo_preparacion"
+            android:layout_marginLeft="60dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tiempo_receta"
+            android:layout_marginRight="20dp"
+            android:text="20 mins"
+            android:textSize="18dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="60dp"
+            android:src="@drawable/cantidad_personas"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cantidad_personas_receta"
+            android:text="4"
+            android:layout_marginLeft="-10dp"
+            android:textSize="18dp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="32dp"
+            android:id="@+id/receta_nombre"
+            android:textColor="@color/naranja"
+            android:text="receta"
+            />
     <TextView
         android:padding="20dp"
         android:layout_width="wrap_content"
@@ -262,7 +323,7 @@ los que no selecciones puedes agregarlos a la lista de compras"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="9dp"
                 android:layout_marginLeft="50dp"
                 android:layout_rowSpan="1"
                 android:layout_column="1"
