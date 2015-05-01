@@ -1,6 +1,7 @@
 package geekgames.delichus2.fragments;
 
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -75,12 +76,37 @@ public class DescripcionReceta extends Fragment {
         ImageView myPhoto = (ImageView) getView().findViewById(R.id.my_photo);
         TextView myName = (TextView)getView().findViewById(R.id.my_name);
 
+        ImageView difImg = (ImageView)getView().findViewById(R.id.dificultad_medidor);
+        TextView difText = (TextView)getView().findViewById(R.id.dificultad_receta);
+        TextView tiempoReceta = (TextView)getView().findViewById(R.id.tiempo_receta);
+        TextView cantidadPersonas = (TextView)getView().findViewById(R.id.cantidad_personas_receta);
+
+
         Recipe laReceta = MainApplication.getInstance().laReceta;
         Usuario me = MainApplication.getInstance().usuario;
 
         nombre.setText(laReceta.nombre);
         autor.setText(laReceta.autor);
         larga.setText(laReceta.larga);
+
+        cantidadPersonas.setText(Integer.toString(laReceta.cantidad));
+        tiempoReceta.setText(laReceta.tiempo+" mins");
+
+        Drawable mecagoenDios = null;
+        if(laReceta.dificultad < 3 ){
+             mecagoenDios = getResources().getDrawable(R.drawable.dificultad_facil);
+            difText.setText("facil");
+        }
+        if(laReceta.dificultad>2 && laReceta.dificultad<5 ){
+            mecagoenDios = getResources().getDrawable(R.drawable.dificultad_media);
+            difText.setText("media");
+        }
+        if(laReceta.dificultad>4){
+            mecagoenDios = getResources().getDrawable(R.drawable.dificultad_dificil);
+            difText.setText("difícil");
+        }
+        difImg.setImageDrawable(mecagoenDios);
+
         myName.setText(me.nombre + " - " + me.titulo);
         rating.setRating(Float.parseFloat(laReceta.puntuacion));
         Picasso.with(getActivity()).load(laReceta.imagen).fit().centerCrop().into(imagen);

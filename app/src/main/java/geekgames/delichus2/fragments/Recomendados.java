@@ -95,9 +95,12 @@ public class Recomendados extends Fragment {
         String puntuacion = jsonImage.getString("puntuacion");
         String descripcion = jsonImage.getString("descripcion");
         int pasos = jsonImage.getInt("pasos");
+        int cantidad = jsonImage.getInt("personas");
+        int dificultad = jsonImage.getInt("dificultad");
+        int tiempo = jsonImage.getInt("tiempoTotal");
         JSONArray steps = jsonImage.getJSONArray("steps");
 
-        final Recipe recipeRecord = new Recipe(id, receta, larga, imagen, idAutor, autor, foto, puntuacion, descripcion, pasos, steps);
+        final Recipe recipeRecord = new Recipe(id, receta, larga, imagen, idAutor, autor, foto, puntuacion, descripcion, pasos, cantidad, dificultad, tiempo,  steps);
 
         TextView nombre = (TextView) getView().findViewById(R.id.recipe_nombre);
         ImageView imagenV = (ImageView) getView().findViewById(R.id.recipe_imagen);

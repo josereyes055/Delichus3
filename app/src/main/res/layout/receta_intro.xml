@@ -67,6 +67,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/dificultad_medidor"
             android:src="@drawable/dificultad_facil"/>
 
         <TextView
@@ -114,6 +115,9 @@
             android:id="@+id/receta_nombre"
             android:textColor="@color/naranja"
             android:text="receta"
+            android:layout_gravity="center"
+            android:textAllCaps="false"
+            android:textAlignment="center"
             />
     <TextView
         android:padding="20dp"

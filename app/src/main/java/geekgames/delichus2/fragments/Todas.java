@@ -1,5 +1,6 @@
 package geekgames.delichus2.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -28,6 +29,7 @@ import java.util.List;
 
 import geekgames.delichus2.MainApplication;
 import geekgames.delichus2.R;
+import geekgames.delichus2.Receta;
 import geekgames.delichus2.adapters.RecipeAdapter;
 import geekgames.delichus2.customObjects.Recipe;
 
@@ -95,7 +97,6 @@ public class Todas extends Fragment {
     }
 
 
-
     // Passing the touch event to the opposite list
     View.OnTouchListener touchListener = new View.OnTouchListener() {
         boolean dispatched = false;
@@ -141,9 +142,12 @@ public class Todas extends Fragment {
                                 String puntuacion = jsonImage.getString("puntuacion");
                                 String descripcion = jsonImage.getString("descripcion");
                                 int pasos = jsonImage.getInt("pasos");
+                                int cantidad = jsonImage.getInt("personas");
+                                int dificultad = jsonImage.getInt("dificultad");
+                                int tiempo = jsonImage.getInt("tiempoTotal");
                                 JSONArray steps = jsonImage.getJSONArray("steps");
 
-                                Recipe record = new Recipe(id, receta, larga, imagen,idautor, autor, foto, puntuacion, descripcion, pasos, steps);
+                                Recipe record = new Recipe(id, receta, larga, imagen,idautor, autor, foto, puntuacion, descripcion, pasos,cantidad, dificultad, tiempo,  steps);
                                 if(i%2 == 0) {
                                     lista1.add(record);
                                 }else{

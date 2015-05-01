@@ -49,7 +49,6 @@ public class Receta extends ActionBarActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.receta);
 
-
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -58,9 +57,6 @@ public class Receta extends ActionBarActivity{
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         setTitle(laReceta.nombre);
-
-
-
 
 
         //getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -236,7 +232,7 @@ public class Receta extends ActionBarActivity{
                     }else{
                         JSONArray pasos = MainApplication.getInstance().laReceta.steps;
                         try {
-                            JSONObject paso = pasos.getJSONObject(position-2);
+                            JSONObject paso = pasos.getJSONObject(position-3);
                             text = paso.getString("paso");
                             if(laVieja) {
                                 ttobj.speak(text, TextToSpeech.QUEUE_FLUSH, null);
@@ -245,7 +241,7 @@ public class Receta extends ActionBarActivity{
                         } catch (JSONException e) {
 
                         }
-                        return PasoFragment.newInstance(position-1);
+                        return PasoFragment.newInstance(position-2);
                     }
 
             }//end case

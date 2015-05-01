@@ -16,11 +16,16 @@ public class Recipe {
     public String puntuacion;
     public String descripcion;
     public int pasos;
+    public int cantidad;
+    public int dificultad;
+    public int tiempo;
     public JSONArray steps;
     public List<Ingrediente> ingredientes;
 
 
-    public Recipe(int id, String nombre, String larga, String imagen, int idAutor, String autor, String foto, String puntuacion, String descripcion, int pasos, JSONArray steps) {
+    public Recipe(int id, String nombre, String larga, String imagen, int idAutor, String autor,
+                  String foto, String puntuacion, String descripcion, int pasos, int cantidad,
+                  int dificultad, int tiempo, JSONArray steps) {
         this.id = id;
         this.nombre = nombre;
         this.larga = larga;
@@ -32,6 +37,9 @@ public class Recipe {
         this.descripcion = descripcion;
         this.pasos = pasos;
         this.steps = steps;
+        this.dificultad = dificultad;
+        this.tiempo = tiempo/60;
+        this.cantidad = cantidad;
     }
 
 }
