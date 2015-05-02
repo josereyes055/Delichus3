@@ -109,7 +109,7 @@
                  android:layout_width="fill_parent"
                  android:layout_height="wrap_content"
                  android:padding="18dp"
-                 android:onClick="openFavoritos">
+                 android:onClick="openSeguidos">
 
                  <ImageView
                      android:layout_width="60dp"

@@ -39,8 +39,6 @@ public class PasoRecetaAdapter extends ArrayAdapter<ImagenPaso> {
         notifyDataSetChanged();
     }
 
-
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView == null) {

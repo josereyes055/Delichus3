@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -71,15 +73,38 @@ public class Todas extends Fragment {
         //listViewLeft.setOnScrollListener(scrollListener);
         //listViewRight.setOnScrollListener(scrollListener);
 
+        // A more complicated dynamic way
+        String[] spinnerItems =
+                getResources().getStringArray(R.array.filtros_recetas);
+// create your own spinner array adapter
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(
+                getActivity(), R.layout.spinner_custom,spinnerItems)
+        {
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
+                ((TextView) v).setGravity(Gravity.CENTER);
+                ((TextView) v).setTextSize(22);
+                return v;
+            }
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View v = super.getDropDownView(position, convertView,parent);
+                ((TextView) v).setGravity(Gravity.CENTER);
+                ((TextView) v).setHeight(69);
+                return v;
+            }
+        };
+
+
         Spinner spinner = (Spinner) getView().findViewById(R.id.filtro_receta);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.filtros_recetas, android.R.layout.simple_spinner_item);
+                R.array.filtros_recetas, R.layout.spinner_custom);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
+        // Apply the adapter to the spinner*/
 
-        spinner.setAdapter(adapter);
+        //spinner.setAdapter(adapter);
+        spinner.setAdapter(adapter2);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

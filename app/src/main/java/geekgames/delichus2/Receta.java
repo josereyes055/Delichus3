@@ -199,6 +199,12 @@ public class Receta extends ActionBarActivity{
         }
     }
 
+    public void onCameraClick(View view){
+
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        startActivity(intent);
+    }
+
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {

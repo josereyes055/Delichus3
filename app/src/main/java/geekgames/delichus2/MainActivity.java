@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import geekgames.delichus2.Dialogs.ListDialog;
 import geekgames.delichus2.fragments.Busqueda;
@@ -28,6 +29,7 @@ import geekgames.delichus2.fragments.Todas;
 import geekgames.delichus2.seconds.ActivityAjustes;
 import geekgames.delichus2.seconds.ActivityFavoritos;
 import geekgames.delichus2.seconds.ActivityLogros;
+import geekgames.delichus2.seconds.ActivitySeguidos;
 import geekgames.delichus2.seconds.ActivityShoppingList;
 import geekgames.delichus2.seconds.OtherUserPage;
 
@@ -80,6 +82,8 @@ public class MainActivity extends ActionBarActivity {
 
     public void changeButtons(View view, int tag){
         View root;
+        int normalSize = 12;
+        int selectedSize = 15;
         if (view != null) {
             root = view.getRootView();
         }else {
@@ -104,27 +108,47 @@ public class MainActivity extends ActionBarActivity {
         btn4.setPadding(10,10,10,10);
         btn5.setPadding(10,10,10,10);
 
+        TextView textView1 = (TextView)root.findViewById(R.id.delimenu1_text);
+        TextView textView2 = (TextView)root.findViewById(R.id.delimenu2_text);
+        TextView textView3 = (TextView)root.findViewById(R.id.delimenu3_text);
+        TextView textView4 = (TextView)root.findViewById(R.id.delimenu4_text);
+        TextView textView5 = (TextView)root.findViewById(R.id.delimenu5_text);
 
+        textView1.setTextSize(normalSize);
+        textView2.setTextSize(normalSize);
+        textView3.setTextSize(normalSize);
+        textView4.setTextSize(normalSize);
+        textView5.setTextSize(normalSize);
         switch (tag){
             case 0:
                 btn1.setImageResource(R.drawable.crearreceta_selec);
                 btn1.setPadding(0,0,0,0);
+
+                textView1.setTextSize(selectedSize);
                 break;
             case 1:
                 btn2.setImageResource(R.drawable.todas_las_recetas_selec);
                 btn2.setPadding(0,0,0,0);
+
+                textView2.setTextSize(selectedSize);
                 break;
             case 2:
                 btn3.setImageResource(R.drawable.recomendado_selec);
                 btn3.setPadding(0,0,0,0);
+
+                textView3.setTextSize(selectedSize);
                 break;
             case 3:
                 btn4.setImageResource(R.drawable.perfil_selec);
                 btn4.setPadding(0,0,0,0);
+
+                textView4.setTextSize(selectedSize);
                 break;
             case 4:
                 btn5.setImageResource(R.drawable.busqueda_selec);
                 btn5.setPadding(0,0,0,0);
+
+                textView5.setTextSize(selectedSize);
                 break;
         }
     }
@@ -200,6 +224,12 @@ public class MainActivity extends ActionBarActivity {
     public void openAjustes(View view){
         Intent mainIntent = new Intent().setClass(
                 MainActivity.this, ActivityAjustes.class);
+        startActivity(mainIntent);
+    }
+
+    public void openSeguidos(View view){
+        Intent mainIntent = new Intent().setClass(
+                MainActivity.this, ActivitySeguidos.class);
         startActivity(mainIntent);
     }
 

@@ -86,14 +86,6 @@ public class PasoFragment extends Fragment{
                     laLista.add(unaImagen);
 
                 }
-
-                if ( lasFotos.length() < 2 ){
-                    for (int i = 0; i<3; i++){
-                        ImagenPaso otraImagen = new ImagenPaso("empty");
-                        laLista.add(otraImagen);
-                    }
-                }
-
             }
 
             if ( lasFotos.length() < 2 ){
