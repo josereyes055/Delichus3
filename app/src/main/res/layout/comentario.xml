@@ -6,8 +6,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:paddingTop="20dp"
         android:layout_gravity="center_horizontal">
 
         <geekgames.delichus2.customViews.CircleImage
@@ -33,7 +34,6 @@
             android:textColor="@color/cafe"
             android:text="@string/usuario"
             android:layout_gravity="left" />
-
 
         <TextView
             android:layout_width="wrap_content"

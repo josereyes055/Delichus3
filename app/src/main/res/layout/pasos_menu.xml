@@ -1,52 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/barra_pasos">
+    tools:context=".Receta"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+
+    android:layout_marginBottom="-20dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/gris_oscuro">
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:orientation="horizontal"
-        android:paddingTop="43dp"
+        android:layout_marginTop="-50dp"
         android:gravity="center">
 
         <ImageButton
-            android:layout_width="wrap_content"
+            android:layout_marginTop="-15dp"
+            android:layout_weight="1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/goBack"
+            android:src="@drawable/atrasar"
+            android:background="@null"
+            android:onClick="goBack"/>
+
+        <ImageButton
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/atras"
-            android:paddingRight="45dp"
-            android:layout_marginLeft="108dp"
             android:src="@drawable/atrasar"
-            android:background="@null" />
+            android:background="@null"
+            android:onClick="recetaPrev"/>
 
         <ImageButton
-            android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/play"
-            android:paddingLeft="35dp"
-            android:paddingRight="35dp"
             android:src="@drawable/play"
-            android:background="@null" />
+            android:background="@null"
+            android:onClick="recetaPlay"/>
 
         <ImageButton
-            android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/adelantar"
-            android:paddingLeft="45dp"
-            android:paddingRight="35dp"
             android:src="@drawable/adelantar"
-            android:background="@null" />
+            android:background="@null"
+            android:onClick="recetaNext"/>
 
         <ImageButton
-            android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/asistente"
-            android:paddingLeft="35dp"
             android:src="@drawable/asistente"
-            android:background="@null" />
+            android:background="@null"
+            android:onClick="toggleVieja"/>
 
     </LinearLayout>
 

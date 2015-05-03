@@ -126,7 +126,7 @@ public class Login extends Activity {
         String reqUrl = "http://www.geekgames.info/dbadmin/test.php?v=9&user="+usuario+"&pass="+contraseña;
         Toast.makeText(getApplicationContext(), "Accediendo...", Toast.LENGTH_SHORT).show();
 
-        JsonObjectRequest request = new JsonObjectRequest(
+                JsonObjectRequest request = new JsonObjectRequest(
                 reqUrl,
                 null,
                 new Response.Listener<JSONObject>() {

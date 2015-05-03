@@ -1,6 +1,7 @@
 package geekgames.delichus2;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -27,6 +29,7 @@ import java.util.Locale;
 
 import geekgames.delichus2.adapters.PasoAdapter;
 import geekgames.delichus2.customObjects.Recipe;
+import geekgames.delichus2.customViews.CustomPager;
 import geekgames.delichus2.fragments.ActivarAyudante;
 import geekgames.delichus2.fragments.CompleteReceta;
 import geekgames.delichus2.fragments.DescripcionReceta;
@@ -39,10 +42,15 @@ public class Receta extends ActionBarActivity{
 
     SectionsPagerAdapter mSectionsPagerAdapter;
     PasoAdapter mAdapter;
-    //CustomPager mViewPager;
-    ViewPager mViewPager;
+    CustomPager mViewPager;
+    //ViewPager mViewPager;
     TextToSpeech ttobj;
     boolean laVieja = false;
+
+    ImageButton play;
+    ImageButton prev;
+    ImageButton next;
+    ImageButton speak;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +62,16 @@ public class Receta extends ActionBarActivity{
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager = (CustomPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         setTitle(laReceta.nombre);
 
+        prev = (ImageButton) findViewById(R.id.atras);
+        next = (ImageButton) findViewById(R.id.adelantar);
+        speak = (ImageButton) findViewById(R.id.asistente);
+        play = (ImageButton) findViewById(R.id.play);
+
+        hideButtons();
 
         //getActionBar().setDisplayHomeAsUpEnabled(true);
         ttobj=new TextToSpeech(getApplicationContext(),
@@ -71,35 +85,6 @@ public class Receta extends ActionBarActivity{
                     }
                 });
 
-    }
-
-    @Override
-    public void onPause(){
-        if(ttobj !=null){
-            ttobj.stop();
-            ttobj.shutdown();
-        }
-        super.onPause();
-    }
-
-    public void viewOtherUser(View elView){
-        Intent mainIntent = new Intent().setClass(
-                Receta.this, OtherUserPage.class);
-        startActivity(mainIntent);
-    }
-
-    public void shutUpVieja(View view){
-        laVieja = false;
-        ToggleButton tb = (ToggleButton)findViewById(R.id.viejaToggle);
-        tb.setChecked(false);
-    }
-    public void letItBeVieja(View view){
-        laVieja = true;
-        ToggleButton tb = (ToggleButton)findViewById(R.id.viejaToggle);
-        tb.setChecked(true);
-    }
-    public void toggleVieja(View view){
-        laVieja = !laVieja;
     }
 
     @Override
@@ -132,8 +117,101 @@ public class Receta extends ActionBarActivity{
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onPause(){
+        if(ttobj !=null){
+            ttobj.stop();
+            ttobj.shutdown();
+        }
+        super.onPause();
+    }
+
+    public void viewOtherUser(View elView){
+        Intent mainIntent = new Intent().setClass(
+                Receta.this, OtherUserPage.class);
+        startActivity(mainIntent);
+    }
+
+    public void shutUpVieja(View view){
+        laVieja = false;
+        ToggleButton tb = (ToggleButton)findViewById(R.id.viejaToggle);
+        tb.setChecked(false);
+    }
+
+    public void letItBeVieja(View view){
+        laVieja = true;
+        ToggleButton tb = (ToggleButton)findViewById(R.id.viejaToggle);
+        tb.setChecked(true);
+    }
+
+    public void toggleVieja(View view){
+        laVieja = !laVieja;
+    }
+
     public void beginRecipe(View view) {
         mViewPager.setCurrentItem(1);
+    }
+
+    public void comenzarReceta(View view) {
+        mViewPager.setCurrentItem(2);
+        showButtons();
+    }
+
+    public void showButtons(){
+        Drawable drawPrev = getResources().getDrawable(R.drawable.atrasar);
+        Drawable drawPlay = getResources().getDrawable(R.drawable.play);
+        Drawable drawNexr = getResources().getDrawable(R.drawable.adelantar);
+        Drawable drawSpeak = getResources().getDrawable(R.drawable.asistente);
+
+        prev.setImageDrawable(drawPrev);
+        play.setImageDrawable(drawPlay);
+        next.setImageDrawable(drawNexr);
+        speak.setImageDrawable(drawSpeak);
+
+        prev.setEnabled(true);
+        play.setEnabled(true);
+        next.setEnabled(true);
+        speak.setEnabled(true);
+    }
+
+    public void hideButtons(){
+        prev.setImageDrawable(null);
+        play.setImageDrawable(null);
+        next.setImageDrawable(null);
+        speak.setImageDrawable(null);
+        prev.setEnabled(false);
+        play.setEnabled(false);
+        next.setEnabled(false);
+        speak.setEnabled(false);
+    }
+
+    public  void goBack(View view){
+        if (mViewPager.getCurrentItem() > 0 ){
+            mViewPager.setCurrentItem(0);
+            hideButtons();
+        }
+        else {
+            onBackPressed();
+        }
+    }
+
+    public void recetaPrev(View view){
+        int state = mViewPager.getCurrentItem();
+        if( state > 2 ){
+            state --;
+        }
+        mViewPager.setCurrentItem(state);
+    }
+
+    public void recetaNext(View view){
+        int state = mViewPager.getCurrentItem();
+        if( state < mSectionsPagerAdapter.getCount() ){
+            state ++;
+        }
+        mViewPager.setCurrentItem(state);
+    }
+
+    public void recetaPlay(View view){
 
     }
 

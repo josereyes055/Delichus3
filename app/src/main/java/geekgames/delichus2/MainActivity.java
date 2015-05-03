@@ -2,6 +2,7 @@ package geekgames.delichus2;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -323,7 +324,6 @@ public class MainActivity extends ActionBarActivity {
             return rootView;
         }
     }
-
 
 
     }

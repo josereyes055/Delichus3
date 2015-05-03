@@ -88,7 +88,7 @@ public class ActivityFavoritos extends ActionBarActivity {
 
         switch (id){
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                onBackPressed();
                 return true;
 
 

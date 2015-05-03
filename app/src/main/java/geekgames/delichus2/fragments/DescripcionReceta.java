@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -42,10 +44,10 @@ import geekgames.delichus2.customObjects.Usuario;
 
 public class DescripcionReceta extends Fragment {
 
-    IngredienteAdapter mAdapter;
-    ComentarioAdapter mAdapter2;
+    public IngredienteAdapter mAdapter;
+    public ComentarioAdapter mAdapter2;
     public ListView listView;
-    ListView listComentarios;
+    public ListView listComentarios;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -115,6 +117,9 @@ public class DescripcionReceta extends Fragment {
 
         fetch(laReceta.id);
         fetchComentarios(laReceta.id);
+
+
+
     }
 
     private void fetch(int idReceta) {
@@ -128,6 +133,7 @@ public class DescripcionReceta extends Fragment {
                             List<Ingrediente> recipeRecords = parse(jsonObject);
 
                             mAdapter.swapRecords(recipeRecords);
+                            setListViewHeightBasedOnChildren(listView);
                         }
                         catch(JSONException e) {
                             Toast.makeText(getActivity(), "Unable to parse data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -155,6 +161,7 @@ public class DescripcionReceta extends Fragment {
                             List<Comentario> comentariosRecords = parseComentarios(jsonObject);
 
                             mAdapter2.swapRecords(comentariosRecords);
+                            setListViewHeightBasedOnChildren(listComentarios);
                         }
                         catch(JSONException e) {
                             Toast.makeText(getActivity(), "Unable to parse data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -209,6 +216,32 @@ public class DescripcionReceta extends Fragment {
 
 
         return records;
+    }
+
+    /**** Method for Setting the Height of the ListView dynamically.
+     **** Hack to fix the issue of not showing all the items of the ListView
+     **** when placed inside a ScrollView  ****/
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null)
+            return;
+
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int totalHeight = 0;
+        View view = null;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, listView);
+            if (i == 0)
+                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, AbsListView.LayoutParams.WRAP_CONTENT));
+
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+            Log.i("FUCKING DEBUG", "alto: "+totalHeight);
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1))+80;
+        listView.setLayoutParams(params);
+        listView.requestLayout();
     }
 
 }
