@@ -1,16 +1,12 @@
 package geekgames.delichus2.seconds;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,21 +20,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import geekgames.delichus2.MainApplication;
 import geekgames.delichus2.R;
-import geekgames.delichus2.Receta;
-import geekgames.delichus2.adapters.SimpleRecipeAdapter;
 import geekgames.delichus2.customObjects.Recipe;
-import geekgames.delichus2.customObjects.SimpleRecipe;
 
 public class OtherUserPage extends ActionBarActivity {
 
@@ -99,9 +86,9 @@ public class OtherUserPage extends ActionBarActivity {
                         try {
                             JSONObject userData = jsonObject;
 
-                            Recipe laReceta = MainApplication.getInstance().laReceta;
+                            //Recipe laReceta = MainApplication.getInstance().laReceta;
                             ImageView foto = (ImageView)findViewById(R.id.other_user_foto);
-                            Picasso.with(getApplicationContext()).load(laReceta.foto).fit().centerCrop().into(foto);
+                            //Picasso.with(getApplicationContext()).load(laReceta.foto).fit().centerCrop().into(foto);
                             TextView nombre = (TextView)findViewById(R.id.su_name);
                             TextView nombre2 = (TextView)findViewById(R.id.su_name_reputacion);
                             TextView nombre3 = (TextView)findViewById(R.id.su_name_recientes);
@@ -116,9 +103,9 @@ public class OtherUserPage extends ActionBarActivity {
                                 }
                             });
                             RatingBar rating = (RatingBar)findViewById(R.id.otro_rating);
-                            nombre.setText( laReceta.autor );
-                            nombre2.setText( laReceta.autor);
-                            nombre3.setText(laReceta.autor);
+                           // nombre.setText( laReceta.autor );
+                            //nombre2.setText( laReceta.autor);
+                           // nombre3.setText(laReceta.autor);
                             titulo.setText(userData.getString("titulo"));
                             nivel.setText(userData.getString("nivel")+".0");
                             rating.setProgress( Integer.parseInt(userData.getString("promedio")) );

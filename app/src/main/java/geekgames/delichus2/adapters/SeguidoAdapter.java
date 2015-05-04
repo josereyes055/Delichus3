@@ -15,7 +15,6 @@ import java.util.List;
 
 import geekgames.delichus2.R;
 import geekgames.delichus2.customObjects.Seguido;
-import geekgames.delichus2.customObjects.SimpleRecipe;
 
 public class SeguidoAdapter extends ArrayAdapter<Seguido> {
 

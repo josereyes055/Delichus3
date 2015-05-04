@@ -3,9 +3,7 @@ package geekgames.delichus2.seconds;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -19,21 +17,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import geekgames.delichus2.MainApplication;
 import geekgames.delichus2.R;
 import geekgames.delichus2.adapters.SeguidoAdapter;
-import geekgames.delichus2.adapters.SimpleRecipeAdapter;
 import geekgames.delichus2.customObjects.Seguido;
-import geekgames.delichus2.customObjects.SimpleRecipe;
 
 public class ActivitySeguidos extends ActionBarActivity {
 

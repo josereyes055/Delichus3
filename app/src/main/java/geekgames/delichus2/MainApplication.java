@@ -1,7 +1,7 @@
 package geekgames.delichus2;
 
 import android.app.Application;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,13 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import geekgames.delichus2.customObjects.*;
@@ -34,12 +28,13 @@ public class MainApplication extends Application {
     public Usuario usuario;
 
     public List<Recipe> recomendados;
-    public List<SimpleRecipe> favoritos;
-    public List<SimpleRecipe> completados;
+    public List<Ficha> favoritos;
+    public List<Ficha> completados;
     public List<Ingrediente> shoppingList;
 
-    public Recipe laReceta;
-    public JSONObject tipo_pasos;
+    public Ficha laReceta;
+    public JSONArray losPasos;
+    /*public JSONObject tipo_pasos;
     public JSONObject tipo_plato;
     public JSONObject tipo_ingrediente;
     public JSONObject tipo_coccion;
@@ -48,6 +43,7 @@ public class MainApplication extends Application {
     public JSONObject origen;
     public JSONObject tags;
     public JSONArray logros;
+    public JSONArray recetas;*/
 
     public String currentHeader = "";
 
@@ -123,7 +119,7 @@ public class MainApplication extends Application {
                         try {
 
                             JSONArray favs = jsonObject.getJSONArray("completados");
-                            ArrayList<SimpleRecipe> records = new ArrayList<SimpleRecipe>();
+                            ArrayList<Ficha> records = new ArrayList<Ficha>();
 
                             for(int i =0; i < favs.length(); i++) {
 

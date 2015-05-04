@@ -1,16 +1,16 @@
 package geekgames.delichus2.fragments;
 
-import android.app.Activity;
-import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -31,8 +31,8 @@ import java.util.List;
 
 import geekgames.delichus2.MainApplication;
 import geekgames.delichus2.R;
-import geekgames.delichus2.Receta;
-import geekgames.delichus2.adapters.RecipeAdapter;
+import geekgames.delichus2.adapters.FichaAdapter;
+import geekgames.delichus2.customObjects.Ficha;
 import geekgames.delichus2.customObjects.Recipe;
 
 
@@ -49,18 +49,19 @@ public class Todas extends Fragment {
 
     private ListView listViewLeft;
     private ListView listViewRight;
-    private RecipeAdapter leftAdapter;
-    private RecipeAdapter rightAdapter;
-    List<Recipe> lista1;
-    List<Recipe> lista2;
+    private FichaAdapter leftAdapter;
+    private FichaAdapter rightAdapter;
+    public JSONArray recetas;
+    List<Ficha> lista1;
+    List<Ficha> lista2;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-
-        leftAdapter = new RecipeAdapter(getActivity());
-        rightAdapter = new RecipeAdapter(getActivity());
+        getRecetas();
+        leftAdapter = new FichaAdapter(getActivity());
+        rightAdapter = new FichaAdapter(getActivity());
 
         listViewLeft = (ListView) getView().findViewById(R.id.all_list_view_left);
         listViewRight = (ListView) getView().findViewById(R.id.all_list_view_right);
@@ -74,12 +75,9 @@ public class Todas extends Fragment {
         //listViewRight.setOnScrollListener(scrollListener);
 
         // A more complicated dynamic way
-        String[] spinnerItems =
-                getResources().getStringArray(R.array.filtros_recetas);
-// create your own spinner array adapter
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(
-                getActivity(), R.layout.spinner_custom,spinnerItems)
-        {
+        String[] spinnerItems = getResources().getStringArray(R.array.filtros_recetas);
+        // create your own spinner array adapter
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getActivity(), R.layout.spinner_custom,spinnerItems){
             public View getView(int position, View convertView, ViewGroup parent) {
                 View v = super.getView(position, convertView, parent);
                 ((TextView) v).setGravity(Gravity.CENTER);
@@ -93,12 +91,10 @@ public class Todas extends Fragment {
                 return v;
             }
         };
-
-
         Spinner spinner = (Spinner) getView().findViewById(R.id.filtro_receta);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.filtros_recetas, R.layout.spinner_custom);
+            R.array.filtros_recetas, R.layout.spinner_custom);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner*/
@@ -118,9 +114,9 @@ public class Todas extends Fragment {
         });
 
 
-        fetch();
+        //fetch();
+        setAllRecipeList();
     }
-
 
     // Passing the touch event to the opposite list
     View.OnTouchListener touchListener = new View.OnTouchListener() {
@@ -140,43 +136,86 @@ public class Todas extends Fragment {
         }
     };
 
+    private void getRecetas(){
+        SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String prefArray = app_preferences.getString("recetas", null);
+        Log.i("FUCKING DEBUG", prefArray);
+        if( prefArray != null ){
+            try {
+                recetas = new JSONArray(prefArray);
+            } catch (JSONException e) {
+                Toast.makeText(getActivity(), "Unable to parse data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    private void setAllRecipeList(){
+
+        if(recetas != null){
+            try {
+                lista1 = new ArrayList<Ficha>();
+                lista2 = new ArrayList<Ficha>();
+
+                for(int i =0; i < recetas.length(); i++) {
+                    JSONObject ficha = recetas.getJSONObject(i);
+                    int id = ficha.getInt("id");
+                    String nombre = ficha.getString("receta");
+                    String imagen = ficha.getString("imagen");
+                    int idAutor = Integer.parseInt(ficha.getString("idAutor"));
+                    String autor = ficha.getString("autor");
+                    String foto = ficha.getString("foto");
+                    float puntuacion = Float.parseFloat( ficha.getString("puntuacion") );
+                    String descripcion = ficha.getString("descripcion");
+                    int pasos = ficha.getInt("pasos");
+
+                    Ficha unaFicha = new Ficha(id, nombre, imagen, idAutor, autor, foto, puntuacion, descripcion, pasos);
+                    if(i%2 == 0) {
+                        lista1.add(unaFicha);
+                    }else{
+                        lista2.add(unaFicha);
+                    }
+                }
+
+                leftAdapter.swapRecipeRecords(lista1);
+                rightAdapter.swapRecipeRecords(lista2);
+            }
+            catch(JSONException e) {
+                Toast.makeText(getActivity(), "Unable to parse data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+    }// end setAllRecipeList
 
     private void fetch() {
         JsonObjectRequest request = new JsonObjectRequest(
                 "http://www.geekgames.info/dbadmin/test.php?v=1",
                 null,
                 new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject jsonObject) {
-                        try {
-                            lista1 = new ArrayList<Recipe>();
-                            lista2 = new ArrayList<Recipe>();
+                            @Override
+                            public void onResponse(JSONObject jsonObject) {
+                                try {
+                                    lista1 = new ArrayList<Ficha>();
+                                    lista2 = new ArrayList<Ficha>();
 
 
-                            JSONArray jsonImages = jsonObject.getJSONArray("recipes");
+                            JSONArray Recetas = jsonObject.getJSONArray("recipes");
 
-                            for(int i =0; i < jsonImages.length(); i++) {
-                                JSONObject jsonImage = jsonImages.getJSONObject(i);
-                                int id = jsonImage.getInt("id");
-                                String receta = jsonImage.getString("receta");
-                                String larga = jsonImage.getString("larga");
-                                String imagen = jsonImage.getString("imagen");
-                               int idautor = Integer.parseInt(jsonImage.getString("idAutor"));
-                                String autor = jsonImage.getString("autor");
-                                String foto = jsonImage.getString("foto");
-                                String puntuacion = jsonImage.getString("puntuacion");
-                                String descripcion = jsonImage.getString("descripcion");
-                                int pasos = jsonImage.getInt("pasos");
-                                int cantidad = jsonImage.getInt("personas");
-                                int dificultad = jsonImage.getInt("dificultad");
-                                int tiempo = jsonImage.getInt("tiempoTotal");
-                                JSONArray steps = jsonImage.getJSONArray("steps");
+                            for(int i =0; i < Recetas.length(); i++) {
+                                JSONObject ficha = Recetas.getJSONObject(i);
+                                int id = ficha.getInt("id");
+                                String nombre = ficha.getString("receta");
+                                String imagen = ficha.getString("imagen");
+                                int idAutor = Integer.parseInt(ficha.getString("idAutor"));
+                                String autor = ficha.getString("autor");
+                                String foto = ficha.getString("foto");
+                                float puntuacion = Float.parseFloat( ficha.getString("puntuacion") );
+                                String descripcion = ficha.getString("descripcion");
+                                int pasos = ficha.getInt("pasos");
 
-                                Recipe record = new Recipe(id, receta, larga, imagen,idautor, autor, foto, puntuacion, descripcion, pasos,cantidad, dificultad, tiempo,  steps);
+                                Ficha unaFicha = new Ficha(id, nombre, imagen, idAutor, autor, foto, puntuacion, descripcion, pasos);
                                 if(i%2 == 0) {
-                                    lista1.add(record);
+                                    lista1.add(unaFicha);
                                 }else{
-                                    lista2.add(record);
+                                    lista2.add(unaFicha);
                                 }
                             }
 

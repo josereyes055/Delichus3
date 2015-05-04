@@ -123,7 +123,7 @@ public class Login extends Activity {
         String usuario = txtUsuario.getText().toString();
         String contraseña = pass.getText().toString();
 
-        String reqUrl = "http://www.geekgames.info/dbadmin/test.php?v=9&user="+usuario+"&pass="+contraseña;
+        String reqUrl = "http://www.geekgames.info/dbadmin/test.php?v=3&user="+usuario+"&pass="+contraseña;
         Toast.makeText(getApplicationContext(), "Accediendo...", Toast.LENGTH_SHORT).show();
 
                 JsonObjectRequest request = new JsonObjectRequest(

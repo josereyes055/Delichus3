@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -27,7 +26,7 @@ import java.util.List;
 
 import geekgames.delichus2.MainApplication;
 import geekgames.delichus2.R;
-import geekgames.delichus2.adapters.RecipeAdapter;
+import geekgames.delichus2.adapters.FichaAdapter;
 import geekgames.delichus2.customObjects.Recipe;
 import geekgames.delichus2.fragments.Busqueda;
 
@@ -38,8 +37,8 @@ public class ResultFiltros extends Fragment {
 
     private ListView listViewLeft;
     private ListView listViewRight;
-    private RecipeAdapter leftAdapter;
-    private RecipeAdapter rightAdapter;
+    private FichaAdapter leftAdapter;
+    private FichaAdapter rightAdapter;
     List<Recipe> lista1;
     List<Recipe> lista2;
 
@@ -53,15 +52,15 @@ public class ResultFiltros extends Fragment {
         instance = this;
         parent = (Busqueda) getParentFragment();
 
-        JSONObject categorias = MainApplication.getInstance().categoria;
-        JSONObject tipo = MainApplication.getInstance().tipo_plato;
-        JSONObject ingredientes = MainApplication.getInstance().tipo_ingrediente;
-        JSONObject coccion = MainApplication.getInstance().tipo_coccion;
+        //JSONObject categorias = MainApplication.getInstance().categoria;
+        //JSONObject tipo = MainApplication.getInstance().tipo_plato;
+        //JSONObject ingredientes = MainApplication.getInstance().tipo_ingrediente;
+        //JSONObject coccion = MainApplication.getInstance().tipo_coccion;
 
-        String[] lcategorias = setLista(categorias);
-        String[] ltipo = setLista(tipo);
-        String[] lingredientes = setLista(ingredientes);
-        String[] lcoccion = setLista(coccion);
+        //String[] lcategorias = setLista(categorias);
+        //String[] ltipo = setLista(tipo);
+        //String[] lingredientes = setLista(ingredientes);
+        //String[] lcoccion = setLista(coccion);
 
         String[] vals = new String[6];
         if(parent.chosen[0]){ vals[0] = Integer.toString(parent.values[0]); }
@@ -70,17 +69,17 @@ public class ResultFiltros extends Fragment {
         if(parent.chosen[1]){ vals[1] = Integer.toString(parent.values[1]*60); }
         else{ vals[1] = "0"; }
 
-        if(parent.chosen[2]){ vals[2] = lcategorias[ parent.values[2] ]; }
-        else{ vals[2] = "0"; }
+        //if(parent.chosen[2]){ vals[2] = lcategorias[ parent.values[2] ]; }
+        //else{ vals[2] = "0"; }
 
-        if(parent.chosen[3]){ vals[3] = ltipo[ parent.values[3] ]; }
-        else{ vals[3] = "0"; }
+        //if(parent.chosen[3]){ vals[3] = ltipo[ parent.values[3] ]; }
+        //else{ vals[3] = "0"; }
 
-        if(parent.chosen[4]){ vals[4] = lingredientes[ parent.values[4] ]; }
-        else{ vals[4] = "0"; }
+        //if(parent.chosen[4]){ vals[4] = lingredientes[ parent.values[4] ]; }
+        //else{ vals[4] = "0"; }
 
-        if(parent.chosen[5]){ vals[5] = lcoccion[ parent.values[5] ]; }
-        else{ vals[5] = "0"; }
+        //if(parent.chosen[5]){ vals[5] = lcoccion[ parent.values[5] ]; }
+        //else{ vals[5] = "0"; }
 
         query = "http://www.geekgames.info/dbadmin/test.php?" +
                 "v=14&h={" +
@@ -116,8 +115,8 @@ public class ResultFiltros extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        leftAdapter = new RecipeAdapter(getActivity());
-        rightAdapter = new RecipeAdapter(getActivity());
+        leftAdapter = new FichaAdapter(getActivity());
+        rightAdapter = new FichaAdapter(getActivity());
 
         listViewLeft = (ListView) getView().findViewById(R.id.search_list_view_left);
         listViewRight = (ListView) getView().findViewById(R.id.search_list_view_right);
@@ -194,8 +193,8 @@ public class ResultFiltros extends Fragment {
                                 }
                             }
 
-                            leftAdapter.swapRecipeRecords(lista1);
-                            rightAdapter.swapRecipeRecords(lista2);
+                            //leftAdapter.swapRecipeRecords(lista1);
+                            //rightAdapter.swapRecipeRecords(lista2);
                         }
                         catch(JSONException e) {
                             Toast.makeText(getActivity(), "Unable to parse data: " + e.getMessage(), Toast.LENGTH_SHORT).show();

@@ -4,14 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -32,12 +29,11 @@ import java.util.Date;
 import java.util.List;
 
 import geekgames.delichus2.Login;
-import geekgames.delichus2.MainActivity;
 import geekgames.delichus2.MainApplication;
 import geekgames.delichus2.R;
-import geekgames.delichus2.Receta;
 import geekgames.delichus2.adapters.SimpleRecipeAdapter;
-import geekgames.delichus2.customObjects.SimpleRecipe;
+import geekgames.delichus2.customObjects.Ficha;
+import geekgames.delichus2.customObjects.Recipe;
 
 public class ActivityAjustes extends ActionBarActivity {
 
@@ -123,7 +119,7 @@ public class ActivityAjustes extends ActionBarActivity {
                     public void onResponse(JSONObject jsonObject) {
                         try {
                             currentHeader = "";
-                            List<SimpleRecipe> favsRecords = parse(jsonObject);
+                            List<Recipe> favsRecords = parse(jsonObject);
 
                             mAdapter.swapRecipeRecords(favsRecords);
                         }
@@ -143,8 +139,8 @@ public class ActivityAjustes extends ActionBarActivity {
         //MainApplication.getInstance().fetchUserAchievements(  MainApplication.getInstance().getUserId() );
     }
 
-    private List<SimpleRecipe> parse(JSONObject json) throws JSONException {
-        ArrayList<SimpleRecipe> records = new ArrayList<SimpleRecipe>();
+    private List<Recipe> parse(JSONObject json) throws JSONException {
+        ArrayList<Recipe> records = new ArrayList<Recipe>();
 
         JSONArray favs = json.getJSONArray("favoritos");
 
@@ -203,18 +199,18 @@ public class ActivityAjustes extends ActionBarActivity {
 
             // Se añade el encabezado
             if(fecha.equals(today) && !currentHeader.equals("FAVORITOS DE HOY")) {
-                records.add(new SimpleRecipe(-1, "FAVORITOS DE HOY", "", "", "", ""));
+                //records.add(new Recipe(-1, "FAVORITOS DE HOY", "", "", 0,  "", ""));
                 currentHeader = "FAVORITOS DE HOY";
             }else if(fecha.equals(yesterday) && !currentHeader.equals("FAVORITOS DE AYER")) {
-                records.add(new SimpleRecipe(-1, "FAVORITOS DE AYER", "", "", "", ""));
+                //records.add(new Recipe(-1, "FAVORITOS DE AYER", "", "", "", ""));
                 currentHeader = "FAVORITOS DE AYER";
             }else if(!fecha.equals(yesterday) && !fecha.equals(today) && !currentHeader.equals("FAVORITOS DE ANTES")){
-                records.add(new SimpleRecipe(-1, "FAVORITOS DE ANTES", "", "", "", ""));
+                //records.add(new Recipe(-1, "FAVORITOS DE ANTES", "", "", "", ""));
                 currentHeader = "FAVORITOS DE ANTES";
             }
 
-            SimpleRecipe record = new SimpleRecipe(id, receta, imagen, autor, fecha, puntuacion);
-            records.add(record);
+            //Recipe record = new Recipe(id, receta, imagen, autor, 0, fecha, puntuacion);
+            //records.add(record);
         }
 
         return records;

@@ -236,7 +236,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        Log.i("FUCKING DEBUG", "Back pressed...");
+        //Log.i("FUCKING DEBUG", "Back pressed...");
         // If the fragment exists and has some back-stack entry
         if (busqueda != null && busqueda.getChildFragmentManager().getBackStackEntryCount() > 0){
             // Get the fragment fragment manager - and pop the backstack

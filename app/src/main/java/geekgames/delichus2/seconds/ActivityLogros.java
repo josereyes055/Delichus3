@@ -1,6 +1,8 @@
 package geekgames.delichus2.seconds;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -86,34 +88,42 @@ public class ActivityLogros extends ActionBarActivity {
         ArrayList<Logro> logrosAlcanzados = new ArrayList<Logro>();
         ArrayList<Logro> logrosPorRealizar = new ArrayList<Logro>();
 
-        JSONArray logros = MainApplication.getInstance().logros;
-        JSONArray completed = MainApplication.getInstance().usuario.logros;
+        SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String prefArray = app_preferences.getString("logros", null);
+        //JSONArray logros = MainApplication.getInstance().logros;
+        JSONArray logros;
+        if(prefArray != null) {
+            logros = new JSONArray(prefArray);
 
-        if( completed == null) {
-            completed = new JSONArray();
-        }
+            JSONArray completed = MainApplication.getInstance().usuario.logros;
 
-        for(int i =0; i < logros.length(); i++) {
-            JSONObject logro = logros.getJSONObject(i);
-            int id = Integer.parseInt(logro.getString("id"));
-            String nombre = logro.getString("logro");
-            String titulo = logro.getString("titulo");
-            String descripcion = logro.getString("descripcion");
-            boolean done = false;
-            for (int j=0; j < completed.length(); j++) {
-                if( id == completed.getInt(j) ) {
-                    done = true;
-                    break;
+            if (completed == null) {
+                completed = new JSONArray();
+            }
+
+            for (int i = 0; i < logros.length(); i++) {
+                JSONObject logro = logros.getJSONObject(i);
+                int id = Integer.parseInt(logro.getString("id"));
+                String nombre = logro.getString("logro");
+                String titulo = logro.getString("titulo");
+                String descripcion = logro.getString("descripcion");
+                boolean done = false;
+                for (int j = 0; j < completed.length(); j++) {
+                    if (id == completed.getInt(j)) {
+                        done = true;
+                        break;
+                    }
+                }
+                Logro record = new Logro(id, nombre, titulo, descripcion, done);
+
+                if (done) {
+                    logrosAlcanzados.add(record);
+                } else {
+                    logrosPorRealizar.add(record);
                 }
             }
-            Logro record = new Logro(id, nombre, titulo, descripcion, done);
 
-            if(done) {
-                logrosAlcanzados.add(record);
-            } else {
-                logrosPorRealizar.add(record);
-            }
-        }
+        }// end prefArrray if
 
         // Si hay logros alcanzados se
         // añade el header

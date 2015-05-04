@@ -37,6 +37,7 @@ import geekgames.delichus2.adapters.ComentarioAdapter;
 import geekgames.delichus2.adapters.IngredienteAdapter;
 import geekgames.delichus2.adapters.LogroAdapter;
 import geekgames.delichus2.customObjects.Comentario;
+import geekgames.delichus2.customObjects.Ficha;
 import geekgames.delichus2.customObjects.Ingrediente;
 import geekgames.delichus2.customObjects.RecetaExtended;
 import geekgames.delichus2.customObjects.Recipe;
@@ -48,6 +49,20 @@ public class DescripcionReceta extends Fragment {
     public ComentarioAdapter mAdapter2;
     public ListView listView;
     public ListView listComentarios;
+    public JSONObject fullReceta;
+
+    TextView nombre;
+    TextView autor;
+    TextView larga;
+    RatingBar rating;
+    ImageView imagen;
+    ImageView foto;
+    ImageView myPhoto;
+    TextView myName;
+    ImageView difImg;
+    TextView difText;
+    TextView tiempoReceta;
+    TextView cantidadPersonas;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,120 +83,103 @@ public class DescripcionReceta extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Ficha laReceta = MainApplication.getInstance().laReceta;
 
-        TextView nombre = (TextView)getView().findViewById(R.id.receta_nombre);
-        TextView autor = (TextView)getView().findViewById(R.id.receta_autor);
-        TextView larga = (TextView)getView().findViewById(R.id.receta_larga);
-        RatingBar rating = (RatingBar)getView().findViewById(R.id.receta_rating);
-        ImageView imagen = (ImageView)getView().findViewById(R.id.receta_imagen);
-        ImageView foto = (ImageView)getView().findViewById(R.id.receta_foto);
-        ImageView myPhoto = (ImageView) getView().findViewById(R.id.my_photo);
-        TextView myName = (TextView)getView().findViewById(R.id.my_name);
+        nombre = (TextView)getView().findViewById(R.id.receta_nombre);
+        autor = (TextView)getView().findViewById(R.id.receta_autor);
+        larga = (TextView)getView().findViewById(R.id.receta_larga);
+        rating = (RatingBar)getView().findViewById(R.id.receta_rating);
+        imagen = (ImageView)getView().findViewById(R.id.receta_imagen);
+        foto = (ImageView)getView().findViewById(R.id.receta_foto);
+        myPhoto = (ImageView) getView().findViewById(R.id.my_photo);
+        myName = (TextView)getView().findViewById(R.id.my_name);
 
-        ImageView difImg = (ImageView)getView().findViewById(R.id.dificultad_medidor);
-        TextView difText = (TextView)getView().findViewById(R.id.dificultad_receta);
-        TextView tiempoReceta = (TextView)getView().findViewById(R.id.tiempo_receta);
-        TextView cantidadPersonas = (TextView)getView().findViewById(R.id.cantidad_personas_receta);
+        difImg = (ImageView)getView().findViewById(R.id.dificultad_medidor);
+        difText = (TextView)getView().findViewById(R.id.dificultad_receta);
+        tiempoReceta = (TextView)getView().findViewById(R.id.tiempo_receta);
+        cantidadPersonas = (TextView)getView().findViewById(R.id.cantidad_personas_receta);
 
 
-        Recipe laReceta = MainApplication.getInstance().laReceta;
+        fetchReceta(laReceta.id);
+        //fetchIngredientes(laReceta.id);
+        //fetchComentarios(laReceta.id);
+    }
+
+    private void fetchReceta(int idReceta){
+        JsonObjectRequest request = new JsonObjectRequest(
+                "http://www.geekgames.info/dbadmin/test.php?v=6&recipeId="+idReceta,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        try {
+
+                            setLabels(jsonObject);
+                        }
+                        catch(JSONException e) {
+                            Toast.makeText(getActivity(), "Unable to parse data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Toast.makeText(getActivity(), "Unable to fetch data: " + volleyError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        MainApplication.getInstance().getRequestQueue().add(request);
+    }
+
+    private void setLabels(JSONObject laReceta) throws JSONException {
+
         Usuario me = MainApplication.getInstance().usuario;
 
-        nombre.setText(laReceta.nombre);
-        autor.setText(laReceta.autor);
-        larga.setText(laReceta.larga);
+        nombre.setText(laReceta.getString("receta"));
+        autor.setText(laReceta.getString("autor"));
+        larga.setText(laReceta.getString("larga"));
 
-        cantidadPersonas.setText(Integer.toString(laReceta.cantidad));
-        tiempoReceta.setText(laReceta.tiempo+" mins");
+        cantidadPersonas.setText( Integer.toString( laReceta.getInt("personas") ) );
+        tiempoReceta.setText( laReceta.getInt("tiempoTotal")/60+" mins" );
 
+        int dificultad = laReceta.getInt("dificultad");
         Drawable mecagoenDios = null;
-        if(laReceta.dificultad < 3 ){
-             mecagoenDios = getResources().getDrawable(R.drawable.dificultad_facil);
+        if(dificultad < 3 ){
+            mecagoenDios = getResources().getDrawable(R.drawable.dificultad_facil);
             difText.setText("facil");
         }
-        if(laReceta.dificultad>2 && laReceta.dificultad<5 ){
+        if(dificultad>2 && dificultad<5 ){
             mecagoenDios = getResources().getDrawable(R.drawable.dificultad_media);
             difText.setText("media");
         }
-        if(laReceta.dificultad>4){
+        if(dificultad>4){
             mecagoenDios = getResources().getDrawable(R.drawable.dificultad_dificil);
             difText.setText("difícil");
         }
         difImg.setImageDrawable(mecagoenDios);
 
         myName.setText(me.nombre + " - " + me.titulo);
-        rating.setRating(Float.parseFloat(laReceta.puntuacion));
-        Picasso.with(getActivity()).load(laReceta.imagen).fit().centerCrop().into(imagen);
-        Picasso.with(getActivity()).load(laReceta.foto).fit().centerCrop().into(foto);
+        rating.setRating(Float.parseFloat( laReceta.getString("puntuacion") ) );
+        Picasso.with(getActivity()).load(laReceta.getString("imagen")).fit().centerCrop().into(imagen);
+        Picasso.with(getActivity()).load(laReceta.getString("foto")).fit().centerCrop().into(foto);
         Picasso.with(getActivity()).load(me.foto).fit().centerCrop().into(myPhoto);
 
-        fetch(laReceta.id);
-        fetchComentarios(laReceta.id);
+        List<Ingrediente> ingredientes = parse( laReceta.getJSONArray("ingredientes") );
+        mAdapter.swapRecords(ingredientes);
+        setListViewHeightBasedOnChildren(listView);
 
+        List<Comentario> comentarios = parseComentarios( laReceta.getJSONArray("comentarios") );
+        mAdapter2.swapRecords(comentarios);
+        setListViewHeightBasedOnChildren(listComentarios);
 
-
+        MainApplication.getInstance().losPasos = laReceta.getJSONArray("steps");
     }
 
-    private void fetch(int idReceta) {
-        JsonObjectRequest request = new JsonObjectRequest(
-                "http://www.geekgames.info/dbadmin/test.php?v=16&recipeId="+idReceta,
-                null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject jsonObject) {
-                        try {
-                            List<Ingrediente> recipeRecords = parse(jsonObject);
 
-                            mAdapter.swapRecords(recipeRecords);
-                            setListViewHeightBasedOnChildren(listView);
-                        }
-                        catch(JSONException e) {
-                            Toast.makeText(getActivity(), "Unable to parse data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        Toast.makeText(getActivity(), "Unable to fetch data: " + volleyError.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        MainApplication.getInstance().getRequestQueue().add(request);
-    }
-
-    private void fetchComentarios(int idReceta) {
-        JsonObjectRequest request = new JsonObjectRequest(
-                "http://www.geekgames.info/dbadmin/test.php?v=19&recipeId="+idReceta,
-                null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject jsonObject) {
-                        try {
-                            List<Comentario> comentariosRecords = parseComentarios(jsonObject);
-
-                            mAdapter2.swapRecords(comentariosRecords);
-                            setListViewHeightBasedOnChildren(listComentarios);
-                        }
-                        catch(JSONException e) {
-                            Toast.makeText(getActivity(), "Unable to parse data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        Toast.makeText(getActivity(), "Unable to fetch data: " + volleyError.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        MainApplication.getInstance().getRequestQueue().add(request);
-    }
-
-    private List<Ingrediente> parse(JSONObject json) throws JSONException {
+    private List<Ingrediente> parse(JSONArray json) throws JSONException {
         ArrayList<Ingrediente> records = new ArrayList<Ingrediente>();
 
-        JSONArray holder= json.getJSONArray("ingredientes");
+        JSONArray holder= json;
 
         for (int i=0; i<holder.length(); i++){
             JSONObject ing = holder.getJSONObject(i);
@@ -194,14 +192,14 @@ public class DescripcionReceta extends Fragment {
             records.add(ingrediente);
         }
 
-        MainApplication.getInstance().laReceta.ingredientes = records;
+        //MainApplication.getInstance().laReceta.ingredientes = records;
         return records;
     }
 
-    private List<Comentario> parseComentarios(JSONObject json) throws JSONException {
+    private List<Comentario> parseComentarios(JSONArray json) throws JSONException {
         ArrayList<Comentario> records = new ArrayList<Comentario>();
 
-        JSONArray holder= json.getJSONArray("comentarios");
+        JSONArray holder= json;
 
         for (int i=0; i<holder.length(); i++){
             JSONObject ing = holder.getJSONObject(i);

@@ -14,9 +14,10 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import geekgames.delichus2.R;
-import geekgames.delichus2.customObjects.SimpleRecipe;
+import geekgames.delichus2.customObjects.Ficha;
+import geekgames.delichus2.customObjects.Recipe;
 
-public class SimpleRecipeAdapter extends ArrayAdapter<SimpleRecipe> {
+public class SimpleRecipeAdapter extends ArrayAdapter<Recipe> {
 
     private Context idkContext ;
 
@@ -25,10 +26,10 @@ public class SimpleRecipeAdapter extends ArrayAdapter<SimpleRecipe> {
         idkContext = context;
     }
 
-    public void swapRecipeRecords(List<SimpleRecipe> objects) {
+    public void swapRecipeRecords(List<Recipe> objects) {
         clear();
 
-        for(SimpleRecipe object : objects) {
+        for(Recipe object : objects) {
             add(object);
         }
 
@@ -37,13 +38,13 @@ public class SimpleRecipeAdapter extends ArrayAdapter<SimpleRecipe> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        SimpleRecipe recipeRecord = getItem(position);
+        Recipe recipeRecord = getItem(position);
 
         // Si el id es -1 entonces es un header
-        if(recipeRecord.getId() == -1) {
+        if(recipeRecord.id == -1) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.header, parent, false);
             TextView nombre = (TextView) convertView.findViewById(R.id.separator);
-            nombre.setText(recipeRecord.getNombre());
+            nombre.setText(recipeRecord.nombre);
 
         } else {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.recipe_min, parent, false);
@@ -56,10 +57,10 @@ public class SimpleRecipeAdapter extends ArrayAdapter<SimpleRecipe> {
 
             //SimpleRecipe recipeRecord = getItem(position);
 
-            nombre.setText(recipeRecord.getNombre());
-            Picasso.with(idkContext).load(recipeRecord.getTipo()).fit().centerCrop().into(imagen);
-            autor.setText(recipeRecord.getAutor());
-            puntuacion.setRating(Float.parseFloat(recipeRecord.getPuntuacion()));
+            nombre.setText(recipeRecord.nombre);
+            Picasso.with(idkContext).load(recipeRecord.foto).fit().centerCrop().into(imagen);
+            autor.setText(recipeRecord.autor);
+            puntuacion.setRating(Float.parseFloat(recipeRecord.puntuacion));
         }
 
         return convertView;

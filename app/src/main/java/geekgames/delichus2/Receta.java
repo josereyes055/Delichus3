@@ -28,6 +28,7 @@ import org.json.JSONObject;
 import java.util.Locale;
 
 import geekgames.delichus2.adapters.PasoAdapter;
+import geekgames.delichus2.customObjects.Ficha;
 import geekgames.delichus2.customObjects.Recipe;
 import geekgames.delichus2.customViews.CustomPager;
 import geekgames.delichus2.fragments.ActivarAyudante;
@@ -38,7 +39,7 @@ import geekgames.delichus2.seconds.OtherUserPage;
 
 public class Receta extends ActionBarActivity{
 
-    Recipe laReceta = MainApplication.getInstance().laReceta;
+    Ficha laReceta = MainApplication.getInstance().laReceta;
 
     SectionsPagerAdapter mSectionsPagerAdapter;
     PasoAdapter mAdapter;
@@ -108,10 +109,6 @@ public class Receta extends ActionBarActivity{
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
 
-
-            /*case R.id.action_settings:
-                return true;*/
-
         }
 
         return super.onOptionsItemSelected(item);
@@ -146,6 +143,14 @@ public class Receta extends ActionBarActivity{
 
     public void toggleVieja(View view){
         laVieja = !laVieja;
+
+        Drawable drawSpeak;
+        if( laVieja ){
+            drawSpeak = getResources().getDrawable(R.drawable.asistente);
+        }else {
+            drawSpeak = getResources().getDrawable(R.drawable.no_asistente);
+        }
+        speak.setImageDrawable(drawSpeak);
     }
 
     public void beginRecipe(View view) {
@@ -246,7 +251,6 @@ public class Receta extends ActionBarActivity{
             CheckBox checkBox = (CheckBox) listaIngrediente.getChildAt(i).findViewById(R.id.checkBox);
             if(!checkBox.isChecked()){
                 Log.i("FUCKING DEBUG", "agregando item " + i+" a la shoppingList");
-                Recipe laReceta = MainApplication.getInstance().laReceta;
                 //MainApplication.getInstance().shoppingList.add(laReceta.ingredientes.get(i));
             }
         }
@@ -295,7 +299,7 @@ public class Receta extends ActionBarActivity{
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
 
-            String text = laReceta.larga;
+            String text = "Saludos";
             int totalPasos = laReceta.pasos+1;
 
             switch (position){
@@ -314,7 +318,7 @@ public class Receta extends ActionBarActivity{
                         MainApplication.getInstance().usuario.sumarPuntaje(10);
                         return new CompleteReceta();
                     }else{
-                        JSONArray pasos = MainApplication.getInstance().laReceta.steps;
+                        JSONArray pasos = MainApplication.getInstance().losPasos;
                         try {
                             JSONObject paso = pasos.getJSONObject(position-3);
                             text = paso.getString("paso");

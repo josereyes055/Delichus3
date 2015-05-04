@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,18 +17,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import geekgames.delichus2.MainActivity;
 import geekgames.delichus2.MainApplication;
 import geekgames.delichus2.R;
-import geekgames.delichus2.adapters.RecipeAdapter;
-import geekgames.delichus2.customObjects.Recipe;
+import geekgames.delichus2.adapters.FichaAdapter;
+import geekgames.delichus2.customObjects.Ficha;
 
 
 public class Recomendados extends Fragment {
@@ -43,22 +38,18 @@ public class Recomendados extends Fragment {
         return rootView;
     }
 
-    private RecipeAdapter mAdapter;
+    private FichaAdapter mAdapter;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-       /* mAdapter = new RecipeAdapter(getActivity());
-
-        ListView listView = (ListView) getView().findViewById(R.id.recomendadosList);
-        listView.setAdapter(mAdapter);*/
         fetch();
     }
 
     private void fetch() {
         JsonObjectRequest request = new JsonObjectRequest(
-                "http://www.geekgames.info/dbadmin/test.php?v=10",
+                "http://www.geekgames.info/dbadmin/test.php?v=5",
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -83,31 +74,27 @@ public class Recomendados extends Fragment {
         MainApplication.getInstance().getRequestQueue().add(request);
     }
 
-    private void setLabels(JSONObject jsonImage) throws JSONException{
+    private void setLabels(JSONObject ficha) throws JSONException{
 
-        int id = jsonImage.getInt("id");
-        String receta = jsonImage.getString("receta");
-        String larga = jsonImage.getString("larga");
-        String imagen = jsonImage.getString("imagen");
-        int idAutor = Integer.parseInt(jsonImage.getString("idAutor"));
-        String autor = jsonImage.getString("autor");
-        String foto = jsonImage.getString("foto");
-        String puntuacion = jsonImage.getString("puntuacion");
-        String descripcion = jsonImage.getString("descripcion");
-        int pasos = jsonImage.getInt("pasos");
-        int cantidad = jsonImage.getInt("personas");
-        int dificultad = jsonImage.getInt("dificultad");
-        int tiempo = jsonImage.getInt("tiempoTotal");
-        JSONArray steps = jsonImage.getJSONArray("steps");
+        int id = ficha.getInt("id");
+        String nombre = ficha.getString("receta");
+        String imagen = ficha.getString("imagen");
+        int idAutor = Integer.parseInt(ficha.getString("idAutor"));
+        String autor = ficha.getString("autor");
+        String foto = ficha.getString("foto");
+        float puntuacion = Float.parseFloat(ficha.getString("puntuacion"));
+        String descripcion = ficha.getString("descripcion");
+        int pasos = ficha.getInt("pasos");
 
-        final Recipe recipeRecord = new Recipe(id, receta, larga, imagen, idAutor, autor, foto, puntuacion, descripcion, pasos, cantidad, dificultad, tiempo,  steps);
+        final Ficha unaFicha = new Ficha(id, nombre, imagen, idAutor, autor, foto, puntuacion, descripcion, pasos);
 
-        TextView nombre = (TextView) getView().findViewById(R.id.recipe_nombre);
+
+        TextView tnombre = (TextView) getView().findViewById(R.id.recipe_nombre);
         ImageView imagenV = (ImageView) getView().findViewById(R.id.recipe_imagen);
         imagenV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainApplication.getInstance().laReceta = recipeRecord;
+                MainApplication.getInstance().laReceta = unaFicha;
                 Log.i("FUCKING DEBUG", "la receta es " + MainApplication.getInstance().laReceta.nombre);
                 ((MainActivity)getActivity()).exploreRecipe(v);
             }
@@ -116,8 +103,8 @@ public class Recomendados extends Fragment {
         favBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("FUCKING DEBUG", "se va a adherir " + recipeRecord.nombre +" como favorito" );
-                MainApplication.getInstance().addFav(MainApplication.getInstance().usuario.id, recipeRecord.id );
+               Log.i("FUCKING DEBUG", "se va a adherir " + unaFicha.nombre +" como favorito" );
+               MainApplication.getInstance().addFav(MainApplication.getInstance().usuario.id, unaFicha.id );
             }
         });
         ImageView fotoV = (ImageView) getView().findViewById(R.id.recipe_foto);
@@ -127,13 +114,13 @@ public class Recomendados extends Fragment {
 
 
 
-        nombre.setText(recipeRecord.nombre);
+        tnombre.setText(unaFicha.nombre);
 
-        Picasso.with(getActivity()).load(recipeRecord.imagen).fit().centerCrop().into(imagenV);
-        Picasso.with(getActivity()).load(recipeRecord.foto).fit().centerCrop().into(fotoV);
-        autorV.setText(recipeRecord.autor);
-        puntuacionV.setRating(Float.parseFloat(recipeRecord.puntuacion));
-        descripcionV.setText(recipeRecord.descripcion);
+        Picasso.with(getActivity()).load(unaFicha.imagen).fit().centerCrop().into(imagenV);
+        Picasso.with(getActivity()).load(unaFicha.foto).fit().centerCrop().into(fotoV);
+        autorV.setText(unaFicha.autor);
+        puntuacionV.setRating(unaFicha.puntuacion);
+        descripcionV.setText(unaFicha.descripcion);
 
     }
 

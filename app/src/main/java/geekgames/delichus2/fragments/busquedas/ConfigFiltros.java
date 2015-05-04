@@ -88,10 +88,10 @@ public class ConfigFiltros extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        JSONObject tipo_plato = MainApplication.getInstance().tipo_plato;
-        JSONObject tipo_ingrediente = MainApplication.getInstance().tipo_ingrediente;
-        JSONObject tipo_coccion = MainApplication.getInstance().tipo_coccion;
-        JSONObject list_categoria = MainApplication.getInstance().categoria;
+        //JSONObject tipo_plato = MainApplication.getInstance().tipo_plato;
+        //JSONObject tipo_ingrediente = MainApplication.getInstance().tipo_ingrediente;
+        //JSONObject tipo_coccion = MainApplication.getInstance().tipo_coccion;
+        //JSONObject list_categoria = MainApplication.getInstance().categoria;
         //JSONObject list_origen = MainApplication.getInstance().getOrigen();
 
         cantidad.setMaxValue(10);
@@ -100,10 +100,10 @@ public class ConfigFiltros extends Fragment {
         tiempo.setMaxValue(60);
         tiempo.setMinValue(0);
 
-        setValues(categoria, list_categoria);
-        setValues(tipo,tipo_plato );
-        setValues(ingrediente, tipo_ingrediente);
-        setValues(coccion, tipo_coccion);
+        //setValues(categoria, list_categoria);
+       // setValues(tipo,tipo_plato );
+        //setValues(ingrediente, tipo_ingrediente);
+        //setValues(coccion, tipo_coccion);
         //setValues(origen, list_origen);
 
         LinearLayout vcantidad = (LinearLayout) rootView.findViewById(R.id.selectorCantidad);

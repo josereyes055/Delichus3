@@ -1,7 +1,9 @@
 package geekgames.delichus2.fragments;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,13 +19,11 @@ import org.json.JSONObject;
 import org.lucasr.twowayview.TwoWayView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import geekgames.delichus2.MainApplication;
 import geekgames.delichus2.R;
 import geekgames.delichus2.adapters.PasoRecetaAdapter;
 import geekgames.delichus2.customObjects.ImagenPaso;
-import geekgames.delichus2.customObjects.SimpleRecipe;
 
 public class PasoFragment extends Fragment{
     View laView;
@@ -69,37 +69,42 @@ public class PasoFragment extends Fragment{
         Bundle args = getArguments();
         int index = args.getInt("index", 0);
 
-        JSONArray pasos = MainApplication.getInstance().laReceta.steps;
+        JSONArray pasos = MainApplication.getInstance().losPasos;
         try {
             JSONObject paso = pasos.getJSONObject(index);
-            JSONObject unArray = MainApplication.getInstance().tipo_pasos;
-            String indexTipo = String.valueOf(paso.getInt("tipo"));
-            String elTipo = unArray.getString(indexTipo);
-            JSONArray lasFotos = paso.getJSONArray("fotosP");
-            ArrayList<ImagenPaso> laLista = new ArrayList<>();
+            SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String prefArray = app_preferences.getString("tipo_pasos", null);
+            if( prefArray != null ) {
+                //JSONObject unArray = MainApplication.getInstance().tipo_pasos;
+                JSONObject unArray = new JSONObject(prefArray);
+                String indexTipo = String.valueOf(paso.getInt("tipo"));
+                String elTipo = unArray.getString(indexTipo);
+                JSONArray lasFotos = paso.getJSONArray("fotosP");
+                ArrayList<ImagenPaso> laLista = new ArrayList<>();
 
-            if(lasFotos.length()>0) {
-                for (int i = 0; i < lasFotos.length(); i++) {
-                    String unString = lasFotos.getString(i);
+                if (lasFotos.length() > 0) {
+                    for (int i = 0; i < lasFotos.length(); i++) {
+                        String unString = lasFotos.getString(i);
 
-                    ImagenPaso unaImagen = new ImagenPaso(unString);
-                    laLista.add(unaImagen);
+                        ImagenPaso unaImagen = new ImagenPaso(unString);
+                        laLista.add(unaImagen);
 
+                    }
                 }
-            }
 
-            if ( lasFotos.length() < 2 ){
-                for (int i = 0; i<3; i++){
-                    ImagenPaso otraImagen = new ImagenPaso("empty");
-                    laLista.add(otraImagen);
+                if (lasFotos.length() < 2) {
+                    for (int i = 0; i < 3; i++) {
+                        ImagenPaso otraImagen = new ImagenPaso("empty");
+                        laLista.add(otraImagen);
+                    }
                 }
-            }
-            Log.i("FUCKING DEBUG", "items: "+laLista.size());
-            mAdapter.swapRecords(laLista);
+                Log.i("FUCKING DEBUG", "items: " + laLista.size());
+                mAdapter.swapRecords(laLista);
 
-            tipo.setText(elTipo);
-            descripcion.setText(paso.getString("paso"));
-            tiempo.setText("tiempo: "+paso.getInt("tiempo"));
+                tipo.setText(elTipo);
+                descripcion.setText(paso.getString("paso"));
+                tiempo.setText("tiempo: " + paso.getInt("tiempo"));
+            }
 
         } catch (JSONException e) {
             Toast.makeText(getActivity(), "Unable to parse data: " + e, Toast.LENGTH_LONG).show();
