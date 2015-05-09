@@ -97,10 +97,10 @@
             android:layout_height="wrap_content"
             android:text="Registrarse"
             android:id="@+id/registro"
-            android:layout_below="@+id/txtPass"
+            android:layout_below="@+id/contrasena2_de_usuario"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"/>
-            <!--android:onClick="access"-->
+            android:layout_marginTop="40dp"
+            android:onClick="registro_completo"/>
 
 
     </LinearLayout>
