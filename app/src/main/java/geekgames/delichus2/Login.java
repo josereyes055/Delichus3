@@ -33,6 +33,7 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
 import geekgames.delichus2.customObjects.Usuario;
+import geekgames.delichus2.seconds.RegistroUsuario;
 
 
 public class Login extends Activity {
@@ -188,4 +189,12 @@ public class Login extends Activity {
         }
     }
 
+    public void ir_registro (View view){
+
+        Intent mainIntent = new Intent().setClass(
+                Login.this, RegistroUsuario.class);
+        startActivity(mainIntent);
+
+
+    }
 }

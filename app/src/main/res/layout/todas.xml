@@ -44,11 +44,14 @@
         <Spinner
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:weightSum="1"
             android:layout_height="wrap_content"
             android:spinnerMode="dialog"
+            android:id="@+id/fitro_seguidos"
             android:layout_gravity="center"
-            android:id="@+id/fitro_seguidos"/>
+            style="@android:style/Widget.Holo.Spinner"
+            android:drawSelectorOnTop="true"
+            android:focusableInTouchMode="true" />
+
 
     </LinearLayout>
 

@@ -254,6 +254,36 @@ public class MainApplication extends Application {
         mRequestQueue.add(request);
     }
 
+    public void insertUser( String nombre, String correo, String pass){
+        JsonObjectRequest request = new JsonObjectRequest(
+                "http://www.geekgames.info/dbadmin/test.php?v=10&nombre="+nombre+"&correo="+correo+"&pass="+pass,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        try {
+                            JSONObject userData = jsonObject;
+
+                            String result = userData.getString("status");
+                            Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_SHORT).show();
+
+                        }
+                        catch(JSONException e) {
+
+                            Toast.makeText(getApplicationContext(), "No se pudo leer la info: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Toast.makeText(getApplicationContext(), "No pudo registrarse la información: " + volleyError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        mRequestQueue.add(request);
+    }
+
 
 
 }// end MainApplication

@@ -62,8 +62,8 @@
             android:id="@+id/registro"
             android:layout_below="@+id/button"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"/>
-            <!--android:onClick="access"-->
+            android:layout_marginTop="40dp"
+            android:onClick="ir_registro"/>
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/facebookButton"

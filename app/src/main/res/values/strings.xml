@@ -47,6 +47,14 @@
         <item>Veganas</item>
     </string-array>
 
+    <string-array name="filtros_seguidos">
+        <item>Todas las recetas</item>
+        <item>Mejor valoradas</item>
+        <item>Más nuevas</item>
+        <item>Vegetarianas</item>
+        <item>Veganas</item>
+    </string-array>
+
      <string-array name="arreglo_ingredientes">
         <item>Acelga</item>
         <item>Aguacate</item>
