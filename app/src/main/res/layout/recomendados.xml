@@ -30,6 +30,8 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:text="Cargando..."
             android:gravity="center"
             android:textSize="32dp"
@@ -54,7 +56,7 @@
                 android:layout_margin="12dp"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:src="@drawable/fav_peque"
+                android:src="@drawable/fav_grande_off"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:id="@+id/recomendado_fav"/>

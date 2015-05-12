@@ -117,15 +117,15 @@ public class ActivityAjustes extends ActionBarActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
-                        try {
+                       /* try {
                             currentHeader = "";
-                            List<Recipe> favsRecords = parse(jsonObject);
+                            //List<Ficha> favsRecords = parse(jsonObject);
 
-                            mAdapter.swapRecipeRecords(favsRecords);
+                           // mAdapter.swapRecipeRecords(favsRecords);
                         }
                         catch(JSONException e) {
                             Toast.makeText(getApplicationContext(), "Unable to parse data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                        }*/
                     }
                 },
                 new Response.ErrorListener() {

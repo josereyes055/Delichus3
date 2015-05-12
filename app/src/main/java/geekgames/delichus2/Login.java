@@ -40,6 +40,7 @@ public class Login extends Activity {
 
     private static final long SPLASH_SCREEN_DELAY = 3000;
     CallbackManager callbackManager;
+    JSONObject fbjson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +76,7 @@ public class Login extends Activity {
             @Override
             public void onError(FacebookException exception) {
                 // App code
-                Log.i("Error","Error: " + exception.toString());
+                Log.i("Error", "Error: " + exception.toString());
             }
         });
 
@@ -87,20 +88,22 @@ public class Login extends Activity {
 
                 if(currentProfile != null) {
 
-                    JSONObject json = new JSONObject();
+                     fbjson = new JSONObject();
                     JSONObject user = new JSONObject();
                     try {
-                        json.put("loginResponse", "ok");
+                        fbjson.put("loginResponse", "ok");
                         user.put("id", currentProfile.getId());
-                        user.put("nombre", currentProfile.getName());
-                        user.put("foto", currentProfile.getLinkUri());
+                        user.put("nombre", currentProfile.getFirstName()+currentProfile.getLastName());
+                        user.put("foto", currentProfile.getProfilePictureUri(100, 100) );
                         user.put("titulo", "");
                         user.put("nivel", 0);
                         user.put("puntaje", 0);
-                        json.put("user", user);
+                        user.put("promedio",0);
+                        fbjson.put("user", user);
+                        //Log.i("FUCKING DEBUG", "acceso fb: usuario = "+currentProfile.getName()+" id = "+currentProfile.getId()+" uri = "+currentProfile.getProfilePictureUri(80,80));
 
-                        login(json);
-
+                        //login(json);
+                        insertUser(currentProfile.getFirstName()+currentProfile.getLastName(), currentProfile.getId(),"12345", currentProfile.getProfilePictureUri(100,100).toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -108,6 +111,46 @@ public class Login extends Activity {
             }
         };
 
+    }
+
+    public void insertUser( final String nombre, String correo, String pass, String imagen){
+        String laRequest = "http://www.geekgames.info/dbadmin/test.php?v=10&nombre="+nombre+"&correo="+correo+"&pass="+pass+"&imagen="+imagen;
+        Log.i("FUCKING DEBUG", "request: "+laRequest);
+        JsonObjectRequest request = new JsonObjectRequest( laRequest,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        try {
+
+                        JSONObject userData = jsonObject;
+                          String result = userData.getString("status");
+                          Toast.makeText(getApplicationContext(),result, Toast.LENGTH_SHORT).show();
+                            JSONObject user = fbjson.getJSONObject("user");
+                          dbAccess(user.getString("nombre"),"12345");
+
+
+                        /*Intent mainIntent = new Intent().setClass(
+                                Login.this, MainActivity.class);
+                        startActivity(mainIntent);*/
+
+
+
+                       }
+                       catch(JSONException e) {
+                            Toast.makeText(getApplicationContext(), "No se pudo leer la info: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                       }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Toast.makeText(getApplicationContext(), "No pudo registrarse la información: " + volleyError.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+        MainApplication.getInstance().getRequestQueue().add(request);
     }
 
     @Override
@@ -124,10 +167,15 @@ public class Login extends Activity {
         String usuario = txtUsuario.getText().toString();
         String contraseña = pass.getText().toString();
 
+        dbAccess(usuario, contraseña);
+
+    }
+
+    public void dbAccess( String usuario, String contraseña){
         String reqUrl = "http://www.geekgames.info/dbadmin/test.php?v=3&user="+usuario+"&pass="+contraseña;
         Toast.makeText(getApplicationContext(), "Accediendo...", Toast.LENGTH_SHORT).show();
 
-                JsonObjectRequest request = new JsonObjectRequest(
+        JsonObjectRequest request = new JsonObjectRequest(
                 reqUrl,
                 null,
                 new Response.Listener<JSONObject>() {
@@ -151,7 +199,6 @@ public class Login extends Activity {
                 });
 
         MainApplication.getInstance().getRequestQueue().add(request);
-
     }
 
     public void login(JSONObject json) throws JSONException{
@@ -173,6 +220,7 @@ public class Login extends Activity {
             editor.putString("userTitulo", user.getString("titulo"));
             editor.putInt("userNivel", user.getInt("nivel"));
             editor.putInt("userPuntaje", user.getInt("puntaje"));
+            editor.putInt("userPromedio", user.getInt("promedio"));
             editor.commit(); // Very important
 
             Usuario elUsuario = new Usuario(user.getInt("id"), user.getString("foto"), user.getString("nombre"), user.getString("titulo"), user.getInt("puntaje"), user.getInt("nivel"));

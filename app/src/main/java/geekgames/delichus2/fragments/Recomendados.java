@@ -1,6 +1,8 @@
 package geekgames.delichus2.fragments;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -20,6 +22,8 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 import geekgames.delichus2.MainActivity;
 import geekgames.delichus2.MainApplication;
 import geekgames.delichus2.R;
@@ -28,6 +32,8 @@ import geekgames.delichus2.customObjects.Ficha;
 
 
 public class Recomendados extends Fragment {
+
+    MediaPlayer mp;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,7 +49,7 @@ public class Recomendados extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        mp = MediaPlayer.create(getActivity(),R.raw.sonido_boton);
         fetch();
     }
 
@@ -104,7 +110,9 @@ public class Recomendados extends Fragment {
             @Override
             public void onClick(View v) {
                Log.i("FUCKING DEBUG", "se va a adherir " + unaFicha.nombre +" como favorito" );
+               mp.start();
                MainApplication.getInstance().addFav(MainApplication.getInstance().usuario.id, unaFicha.id );
+
             }
         });
         ImageView fotoV = (ImageView) getView().findViewById(R.id.recipe_foto);
@@ -120,7 +128,6 @@ public class Recomendados extends Fragment {
         Picasso.with(getActivity()).load(unaFicha.foto).fit().centerCrop().into(fotoV);
         autorV.setText(unaFicha.autor);
         puntuacionV.setRating(unaFicha.puntuacion);
-        descripcionV.setText(unaFicha.descripcion);
 
     }
 

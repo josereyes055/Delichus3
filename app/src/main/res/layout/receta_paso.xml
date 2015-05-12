@@ -2,13 +2,13 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="fill_parent"
         android:orientation="vertical"
         android:layout_weight="1"
         android:gravity="center">
@@ -58,7 +58,7 @@
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="250dp"
-            android:layout_margin="30dp"
+
             android:src="@drawable/cocer"
             android:id="@+id/paso_imagen"
             android:layout_marginTop="-20dp"/>
@@ -66,11 +66,11 @@
 
         <TextView
             android:layout_width="fill_parent"
-            android:padding="10dp"
+            android:layout_height="200px"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:gravity="center"
-            android:textSize="30dp"
-            android:maxHeight="150px"
-            android:layout_height="wrap_content"
+            android:textSize="27dp"
             android:text="descripcion"
             android:id="@+id/paso_descripcion"
             android:layout_gravity="center_horizontal" />
@@ -92,7 +92,6 @@
             android:paddingRight="20dp"
             android:background="@null"
             android:paddingBottom="10dp"
-            android:paddingTop="10dp"
             android:layout_gravity="right"
             android:onClick="onCameraClick"
             />

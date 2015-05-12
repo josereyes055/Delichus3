@@ -44,7 +44,7 @@
                android:layout_margin="12dp"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/fav_peque"
+                android:src="@drawable/fav_peque_off"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:id="@+id/recipe_fav"/>

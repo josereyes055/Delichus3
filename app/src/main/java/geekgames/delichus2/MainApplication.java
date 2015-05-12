@@ -2,6 +2,7 @@ package geekgames.delichus2;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -195,7 +196,7 @@ public class MainApplication extends Application {
 
 
         JsonObjectRequest request = new JsonObjectRequest(
-                "http://www.geekgames.info/dbadmin/test.php?v=15&userId="+idUser+"&recipeId="+idReceta,
+                "http://www.geekgames.info/dbadmin/test.php?v=11&userId="+idUser+"&recipeId="+idReceta,
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -204,7 +205,12 @@ public class MainApplication extends Application {
                             JSONObject userData = jsonObject;
 
                             String result = userData.getString("status");
+                            if (result == "ok"){
+
                                 Toast.makeText(getApplicationContext(), "Añadido a favoritos", Toast.LENGTH_SHORT).show();
+
+                            }
+
 
                         }
                         catch(JSONException e) {

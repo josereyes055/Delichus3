@@ -9,7 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2">
+        android:layout_weight="2"
+        android:layout_marginTop="20dp">
 
         <include layout="@layout/splash_screen" />
 
@@ -28,32 +29,38 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="Escriba su nombre de usuario"
-            android:textSize="30dp"
+            android:textSize="25dp"
             android:layout_marginBottom="10dp"/>
 
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="40dp"
             android:padding="5dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
             android:inputType="text"
             android:ems="10"
             android:id="@+id/nombre_de_usuario"
             android:background="#fff"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="30dp"/>
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="Escriba su e-mail"
-            android:textSize="30dp"
+            android:textSize="25dp"
             android:layout_marginBottom="10dp"/>
 
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="40dp"
             android:padding="5dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginBottom="30dp"
             android:inputType="textEmailAddress"
             android:ems="10"
             android:id="@+id/mail_de_usuario"
@@ -62,31 +69,37 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="Escriba su contraseña"
-            android:textSize="30dp"
+            android:textSize="25dp"
             android:layout_marginBottom="10dp"/>
 
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="40dp"
             android:padding="5dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/contrasena1_de_usuario"
             android:background="#fff"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="30dp"/>
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="Vuelva a escribir su contraseña"
-            android:textSize="30dp"
+            android:textSize="25dp"
             android:layout_marginBottom="10dp"/>
 
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="40dp"
             android:padding="5dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/contrasena2_de_usuario"

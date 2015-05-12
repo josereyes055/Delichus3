@@ -94,14 +94,14 @@ public class ActivityFavoritos extends ActionBarActivity {
     private void fetch() {
 
         JsonObjectRequest request = new JsonObjectRequest(
-                "http://www.geekgames.info/dbadmin/test.php?v=2&userId="+MainApplication.getInstance().usuario.id,
+                "http://www.geekgames.info/dbadmin/test.php?v=12&userId="+MainApplication.getInstance().usuario.id,
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
                         try {
                             currentHeader = "";
-                            List<Recipe> favsRecords = parse(jsonObject);
+                            List<Ficha> favsRecords = parse(jsonObject);
 
                             mAdapter.swapRecipeRecords(favsRecords);
                         }
@@ -121,8 +121,8 @@ public class ActivityFavoritos extends ActionBarActivity {
         //MainApplication.getInstance().fetchUserAchievements(  MainApplication.getInstance().getUserId() );
     }
 
-    private List<Recipe> parse(JSONObject json) throws JSONException {
-        ArrayList<Recipe> records = new ArrayList<Recipe>();
+    private List<Ficha> parse(JSONObject json) throws JSONException {
+        ArrayList<Ficha> records = new ArrayList<Ficha>();
 
         JSONArray favs = json.getJSONArray("favoritos");
 
@@ -169,14 +169,13 @@ public class ActivityFavoritos extends ActionBarActivity {
             JSONObject jsonImage = jsonContent.getJSONObject("plato");
             int id = jsonImage.getInt("id");
             String receta = jsonImage.getString("receta");
-            String larga = jsonImage.getString("larga");
             String imagen = jsonImage.getString("imagen");
+            int idAutor = Integer.parseInt(jsonImage.getString("idAutor"));
             String autor = jsonImage.getString("autor");
             String foto = jsonImage.getString("foto");
-            String puntuacion = jsonImage.getString("puntuacion");
+            float puntuacion = Float.parseFloat(jsonImage.getString("puntuacion"));
             String descripcion = jsonImage.getString("descripcion");
             int pasos = jsonImage.getInt("pasos");
-            JSONArray steps = jsonImage.getJSONArray("steps");
             String fecha = jsonContent.getString("fechaFav");
 
             // Se añade el encabezado
@@ -191,8 +190,8 @@ public class ActivityFavoritos extends ActionBarActivity {
                 currentHeader = "FAVORITOS DE ANTES";
             }
 
-           // Ficha record = new Ficha(id, receta, imagen, autor, fecha, puntuacion);
-            //records.add(record);
+             Ficha record = new Ficha(id, receta, imagen, idAutor, autor, foto, puntuacion, descripcion, pasos);
+             records.add(record);
         }
 
         return records;

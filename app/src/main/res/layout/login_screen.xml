@@ -56,7 +56,7 @@
             android:onClick="access"/>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:text="Registrarse"
             android:id="@+id/registro"
@@ -67,8 +67,8 @@
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/facebookButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="180dp"
+            android:layout_height="38dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             />

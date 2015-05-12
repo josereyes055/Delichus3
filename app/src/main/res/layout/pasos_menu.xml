@@ -12,7 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/gris_oscuro">
+        android:background="@color/barra_sup">
 
     </LinearLayout>
 
@@ -26,10 +26,11 @@
         <ImageButton
             android:layout_marginTop="-15dp"
             android:layout_weight="1"
+            android:layout_marginLeft="-55dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/goBack"
-            android:src="@drawable/atrasar"
+            android:src="@drawable/atras"
             android:background="@null"
             android:onClick="goBack"/>
 

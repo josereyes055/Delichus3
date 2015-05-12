@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import geekgames.delichus2.MainActivity;
 import geekgames.delichus2.MainApplication;
 import geekgames.delichus2.R;
 import geekgames.delichus2.customObjects.Ficha;
@@ -53,9 +54,9 @@ public class FichaAdapter extends ArrayAdapter<Ficha> {
         imagen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //MainApplication.getInstance().laReceta = unaFicha;
+                MainApplication.getInstance().laReceta = unaFicha;
                 //Log.i("FUCKING DEBUG", "la receta es " + MainApplication.getInstance().laReceta.nombre);
-                //((MainActivity)idkContext).exploreRecipe(v);
+                ((MainActivity)getContext()).exploreRecipe(v);
             }
         });
         ImageView favBtn = (ImageView)convertView.findViewById(R.id.recipe_fav);

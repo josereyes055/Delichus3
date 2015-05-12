@@ -17,7 +17,7 @@ import geekgames.delichus2.R;
 import geekgames.delichus2.customObjects.Ficha;
 import geekgames.delichus2.customObjects.Recipe;
 
-public class SimpleRecipeAdapter extends ArrayAdapter<Recipe> {
+public class SimpleRecipeAdapter extends ArrayAdapter<Ficha> {
 
     private Context idkContext ;
 
@@ -26,10 +26,10 @@ public class SimpleRecipeAdapter extends ArrayAdapter<Recipe> {
         idkContext = context;
     }
 
-    public void swapRecipeRecords(List<Recipe> objects) {
+    public void swapRecipeRecords(List<Ficha> objects) {
         clear();
 
-        for(Recipe object : objects) {
+        for(Ficha object : objects) {
             add(object);
         }
 
@@ -38,7 +38,7 @@ public class SimpleRecipeAdapter extends ArrayAdapter<Recipe> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Recipe recipeRecord = getItem(position);
+        Ficha recipeRecord = getItem(position);
 
         // Si el id es -1 entonces es un header
         if(recipeRecord.id == -1) {
@@ -60,7 +60,7 @@ public class SimpleRecipeAdapter extends ArrayAdapter<Recipe> {
             nombre.setText(recipeRecord.nombre);
             Picasso.with(idkContext).load(recipeRecord.foto).fit().centerCrop().into(imagen);
             autor.setText(recipeRecord.autor);
-            puntuacion.setRating(Float.parseFloat(recipeRecord.puntuacion));
+            puntuacion.setRating(recipeRecord.puntuacion);
         }
 
         return convertView;
