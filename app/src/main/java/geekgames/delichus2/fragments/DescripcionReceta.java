@@ -10,11 +10,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +65,8 @@ public class DescripcionReceta extends Fragment {
     TextView difText;
     TextView tiempoReceta;
     TextView cantidadPersonas;
+    ScrollView sv;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,6 +76,7 @@ public class DescripcionReceta extends Fragment {
         listView = (ListView) rootView.findViewById(R.id.lista_ingredientes);
         mAdapter = new IngredienteAdapter(getActivity());
         listView.setAdapter(mAdapter);
+        sv = (ScrollView)rootView.findViewById(R.id.scrolldemierda);
 
         listComentarios = (ListView) rootView.findViewById((R.id.lista_comentarios));
         mAdapter2 = new ComentarioAdapter(getActivity());
@@ -173,6 +178,14 @@ public class DescripcionReceta extends Fragment {
         setListViewHeightBasedOnChildren(listComentarios);
 
         MainApplication.getInstance().losPasos = laReceta.getJSONArray("steps");
+
+        sv.smoothScrollTo(0, 0);
+        AlphaAnimation animate = new AlphaAnimation(0,1);
+        animate.setDuration(250);
+
+        animate.setFillAfter(true);
+        sv.startAnimation(animate);
+        sv.setVisibility(View.VISIBLE);
     }
 
 

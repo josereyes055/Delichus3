@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -33,14 +35,14 @@ import geekgames.delichus2.customObjects.Ficha;
 
 public class Recomendados extends Fragment {
 
-    MediaPlayer mp;
 
+    Animation animScale;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.recomendados, container, false);
-
+        animScale = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_button_animation);
         return rootView;
     }
 
@@ -49,7 +51,7 @@ public class Recomendados extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mp = MediaPlayer.create(getActivity(),R.raw.sonido_boton);
+
         fetch();
     }
 
@@ -110,7 +112,8 @@ public class Recomendados extends Fragment {
             @Override
             public void onClick(View v) {
                Log.i("FUCKING DEBUG", "se va a adherir " + unaFicha.nombre +" como favorito" );
-               mp.start();
+               v.startAnimation(animScale);
+               MainApplication.mp.start();
                MainApplication.getInstance().addFav(MainApplication.getInstance().usuario.id, unaFicha.id );
 
             }
@@ -127,6 +130,7 @@ public class Recomendados extends Fragment {
         Picasso.with(getActivity()).load(unaFicha.imagen).fit().centerCrop().into(imagenV);
         Picasso.with(getActivity()).load(unaFicha.foto).fit().centerCrop().into(fotoV);
         autorV.setText(unaFicha.autor);
+        descripcionV.setText(descripcion);
         puntuacionV.setRating(unaFicha.puntuacion);
 
     }

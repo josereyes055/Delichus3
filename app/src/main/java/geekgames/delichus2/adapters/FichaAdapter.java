@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -22,10 +24,11 @@ import geekgames.delichus2.customObjects.Ficha;
 public class FichaAdapter extends ArrayAdapter<Ficha> {
 
     private Context idkContext ;
-
+    Animation animScale;
     public FichaAdapter(Context context){
         super(context, R.layout.recipe);
         idkContext = context;
+        animScale = AnimationUtils.loadAnimation(idkContext, R.anim.scale_button_animation);
     }
 
     public void swapRecipeRecords(List<Ficha> objects) {
@@ -64,6 +67,8 @@ public class FichaAdapter extends ArrayAdapter<Ficha> {
             @Override
             public void onClick(View v) {
                 //Log.i("FUCKING DEBUG", "se va a adherir " + unaFicha.nombre +" como favorito" );
+                v.startAnimation(animScale);
+                MainApplication.mp.start();
                 MainApplication.getInstance().addFav(MainApplication.getInstance().usuario.id, unaFicha.id );
             }
         });

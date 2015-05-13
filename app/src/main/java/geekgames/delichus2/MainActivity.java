@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -47,6 +49,7 @@ public class MainActivity extends ActionBarActivity {
     Recomendados recomendados;
     Perfil perfil;
     Busqueda busqueda;
+    Animation animScale;
 
 
     @Override
@@ -58,7 +61,7 @@ public class MainActivity extends ActionBarActivity {
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
+        animScale = AnimationUtils.loadAnimation(this, R.anim.scale_button_animation);
         crear = new Crear();
         todas = new Todas();
         recomendados =new Recomendados();
@@ -82,6 +85,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void changeButtons(View view, int tag){
+
         View root;
         int normalSize = 12;
         int selectedSize = 15;
@@ -122,30 +126,35 @@ public class MainActivity extends ActionBarActivity {
         textView5.setTextSize(normalSize);
         switch (tag){
             case 0:
+                btn1.startAnimation(animScale);
                 btn1.setImageResource(R.drawable.crearreceta_selec);
                 btn1.setPadding(0,0,0,0);
 
                 textView1.setTextSize(selectedSize);
                 break;
             case 1:
+                btn2.startAnimation(animScale);
                 btn2.setImageResource(R.drawable.todas_las_recetas_selec);
                 btn2.setPadding(0,0,0,0);
 
                 textView2.setTextSize(selectedSize);
                 break;
             case 2:
+                btn3.startAnimation(animScale);
                 btn3.setImageResource(R.drawable.recomendado_selec);
                 btn3.setPadding(0,0,0,0);
 
                 textView3.setTextSize(selectedSize);
                 break;
             case 3:
+                btn4.startAnimation(animScale);
                 btn4.setImageResource(R.drawable.perfil_selec);
                 btn4.setPadding(0,0,0,0);
 
                 textView4.setTextSize(selectedSize);
                 break;
             case 4:
+                btn5.startAnimation(animScale);
                 btn5.setImageResource(R.drawable.busqueda_selec);
                 btn5.setPadding(0,0,0,0);
 
@@ -175,7 +184,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void openLogros(View view){
-
+        view.startAnimation(animScale);
         Intent mainIntent = new Intent().setClass(
                MainActivity.this, ActivityLogros.class);
         startActivity(mainIntent);
@@ -183,12 +192,13 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void showDialog(View view){
+        view.startAnimation(animScale);
         ListDialog list = new ListDialog();
         list.show(getFragmentManager(),"unTag");
     }
 
     public void gotoPage(View view){
-
+        view.startAnimation(animScale);
         int tag = Integer.parseInt((String) view.getTag());
         mViewPager.setCurrentItem(tag, true);
         //changeButtons(view, tag);
@@ -196,7 +206,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void exploreRecipe(View view){
-
+        view.startAnimation(animScale);
         Intent mainIntent = new Intent().setClass(
                 MainActivity.this, Receta.class);
         startActivity(mainIntent);
@@ -211,24 +221,28 @@ public class MainActivity extends ActionBarActivity {
 
 
     public void openFavoritos(View view){
+        view.startAnimation(animScale);
         Intent mainIntent = new Intent().setClass(
                 MainActivity.this, ActivityFavoritos.class);
         startActivity(mainIntent);
     }
 
     public void openShoppingList(View view){
+        view.startAnimation(animScale);
         Intent mainIntent = new Intent().setClass(
                 MainActivity.this, ActivityShoppingList.class);
         startActivity(mainIntent);
     }
 
     public void openAjustes(View view){
+        view.startAnimation(animScale);
         Intent mainIntent = new Intent().setClass(
                 MainActivity.this, ActivityAjustes.class);
         startActivity(mainIntent);
     }
 
     public void openSeguidos(View view){
+        view.startAnimation(animScale);
         Intent mainIntent = new Intent().setClass(
                 MainActivity.this, ActivitySeguidos.class);
         startActivity(mainIntent);

@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
@@ -40,6 +42,7 @@ import geekgames.delichus2.seconds.OtherUserPage;
 public class Receta extends ActionBarActivity{
 
     Ficha laReceta = MainApplication.getInstance().laReceta;
+    Animation animScale;
 
     SectionsPagerAdapter mSectionsPagerAdapter;
     PasoAdapter mAdapter;
@@ -61,7 +64,7 @@ public class Receta extends ActionBarActivity{
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
+        animScale = AnimationUtils.loadAnimation(this, R.anim.scale_button_animation);
         // Set up the ViewPager with the sections adapter.
         mViewPager = (CustomPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -130,18 +133,21 @@ public class Receta extends ActionBarActivity{
     }
 
     public void shutUpVieja(View view){
+        view.startAnimation(animScale);
         laVieja = false;
         ToggleButton tb = (ToggleButton)findViewById(R.id.viejaToggle);
         tb.setChecked(false);
     }
 
     public void letItBeVieja(View view){
+        view.startAnimation(animScale);
         laVieja = true;
         ToggleButton tb = (ToggleButton)findViewById(R.id.viejaToggle);
         tb.setChecked(true);
     }
 
     public void toggleVieja(View view){
+        view.startAnimation(animScale);
         laVieja = !laVieja;
 
         Drawable drawSpeak;
@@ -154,10 +160,13 @@ public class Receta extends ActionBarActivity{
     }
 
     public void beginRecipe(View view) {
+
+        view.startAnimation(animScale);
         mViewPager.setCurrentItem(1);
     }
 
     public void comenzarReceta(View view) {
+        view.startAnimation(animScale);
         mViewPager.setCurrentItem(2);
         showButtons();
     }
@@ -191,6 +200,7 @@ public class Receta extends ActionBarActivity{
     }
 
     public  void goBack(View view){
+        view.startAnimation(animScale);
         if (mViewPager.getCurrentItem() > 0 ){
             mViewPager.setCurrentItem(0);
             hideButtons();
@@ -201,6 +211,7 @@ public class Receta extends ActionBarActivity{
     }
 
     public void recetaPrev(View view){
+        view.startAnimation(animScale);
         int state = mViewPager.getCurrentItem();
         if( state > 2 ){
             state --;
@@ -209,6 +220,7 @@ public class Receta extends ActionBarActivity{
     }
 
     public void recetaNext(View view){
+        view.startAnimation(animScale);
         int state = mViewPager.getCurrentItem();
         if( state < mSectionsPagerAdapter.getCount() ){
             state ++;
@@ -217,10 +229,11 @@ public class Receta extends ActionBarActivity{
     }
 
     public void recetaPlay(View view){
-
+        view.startAnimation(animScale);
     }
 
     public void selectAllIngredients(View view){
+        view.startAnimation(animScale);
         ListView listaIngrediente = (ListView) findViewById(R.id.lista_ingredientes);
         int totalIngredientes = listaIngrediente.getChildCount();
         Button selectAllButton = (Button) findViewById(R.id.select_all);
@@ -245,6 +258,7 @@ public class Receta extends ActionBarActivity{
     }
 
     public void carrito_ingredientes(View view) {
+        view.startAnimation(animScale);
         ListView listaIngrediente = (ListView) findViewById(R.id.lista_ingredientes);
         int totalIngredientes = listaIngrediente.getChildCount();
         for (int i = 0; i < totalIngredientes; i++){
@@ -282,7 +296,7 @@ public class Receta extends ActionBarActivity{
     }
 
     public void onCameraClick(View view){
-
+        view.startAnimation(animScale);
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         startActivity(intent);
     }

@@ -6,7 +6,11 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -30,6 +34,7 @@ public class ActivitySeguidos extends ActionBarActivity {
     private SeguidoAdapter mAdapter;
     int idUser;
     private String currentHeader = "";
+    TextView loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,7 @@ public class ActivitySeguidos extends ActionBarActivity {
         ListView listView = (ListView) findViewById(R.id.list_seguidos);
         listView.setAdapter(mAdapter);
         setTitle("Personas que sigues");
+        loading = (TextView) findViewById(R.id.loading_seguidos);
 
         final SharedPreferences app_preferences =
                 PreferenceManager.getDefaultSharedPreferences(getBaseContext());
@@ -86,7 +92,7 @@ public class ActivitySeguidos extends ActionBarActivity {
     private void fetch() {
 
         JsonObjectRequest request = new JsonObjectRequest(
-                "http://www.geekgames.info/dbadmin/test.php?v=18&userId="+MainApplication.getInstance().usuario.id,
+                "http://www.geekgames.info/dbadmin/test.php?v=14&userId="+MainApplication.getInstance().usuario.id,
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -95,7 +101,15 @@ public class ActivitySeguidos extends ActionBarActivity {
                             currentHeader = "";
                             List<Seguido> segsRecords = parse(jsonObject);
 
+                            AlphaAnimation animate = new AlphaAnimation(1,0);
+                            animate.setDuration(250);
+
+                            animate.setFillAfter(true);
+                            loading.startAnimation(animate);
+                            loading.setVisibility(View.GONE);
+
                             mAdapter.swapRecords(segsRecords);
+
                         }
                         catch(JSONException e) {
                             Toast.makeText(getApplicationContext(), "Unable to parse data: " + e.getMessage(), Toast.LENGTH_SHORT).show();

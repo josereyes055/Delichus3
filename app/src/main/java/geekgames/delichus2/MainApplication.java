@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -27,6 +29,7 @@ public class MainApplication extends Application {
     public static MainApplication sInstance;
     public RequestQueue mRequestQueue;
     public Usuario usuario;
+    public static MediaPlayer mp;
 
     public List<Recipe> recomendados;
     public List<Ficha> favoritos;
@@ -53,6 +56,7 @@ public class MainApplication extends Application {
         super.onCreate();
 
         mRequestQueue = Volley.newRequestQueue(this);
+        mp = MediaPlayer.create(this,R.raw.sonido_boton);
 
         sInstance = this;
     }
@@ -162,7 +166,7 @@ public class MainApplication extends Application {
 
         //Toast.makeText(getApplicationContext(), "Puliendo trofeos de cocina...", Toast.LENGTH_SHORT).show();
         JsonObjectRequest request = new JsonObjectRequest(
-                "http://www.geekgames.info/dbadmin/test.php?v=6&userId="+idUser,
+                "http://www.geekgames.info/dbadmin/test.php?v=13&userId="+idUser,
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -205,11 +209,11 @@ public class MainApplication extends Application {
                             JSONObject userData = jsonObject;
 
                             String result = userData.getString("status");
-                            if (result == "ok"){
+
 
                                 Toast.makeText(getApplicationContext(), "Añadido a favoritos", Toast.LENGTH_SHORT).show();
 
-                            }
+
 
 
                         }

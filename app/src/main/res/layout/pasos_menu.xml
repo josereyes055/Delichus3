@@ -70,7 +70,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/asistente"
-            android:src="@drawable/asistente"
+            android:src="@drawable/no_asistente"
             android:background="@null"
             android:onClick="toggleVieja"/>
 
