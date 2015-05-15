@@ -66,6 +66,8 @@
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal"
         android:gravity="center">
@@ -171,7 +173,7 @@ los que no selecciones puedes agregarlos a la lista de compras"
             />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:paddingBottom="20dp">

@@ -206,7 +206,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void exploreRecipe(View view){
-        view.startAnimation(animScale);
         Intent mainIntent = new Intent().setClass(
                 MainActivity.this, Receta.class);
         startActivity(mainIntent);

@@ -43,6 +43,8 @@ public class Receta extends ActionBarActivity{
 
     Ficha laReceta = MainApplication.getInstance().laReceta;
     Animation animScale;
+    Animation animScaleSutile;
+    Animation animScaleRectangular;
 
     SectionsPagerAdapter mSectionsPagerAdapter;
     PasoAdapter mAdapter;
@@ -65,6 +67,8 @@ public class Receta extends ActionBarActivity{
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         animScale = AnimationUtils.loadAnimation(this, R.anim.scale_button_animation);
+        animScaleSutile = AnimationUtils.loadAnimation(this, R.anim.scale_button_sutile_animation);
+        animScaleRectangular = AnimationUtils.loadAnimation(this, R.anim.scale_button_rectangular_animation);
         // Set up the ViewPager with the sections adapter.
         mViewPager = (CustomPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -127,6 +131,7 @@ public class Receta extends ActionBarActivity{
     }
 
     public void viewOtherUser(View elView){
+        elView.startAnimation(animScaleSutile);
         Intent mainIntent = new Intent().setClass(
                 Receta.this, OtherUserPage.class);
         startActivity(mainIntent);
@@ -147,7 +152,6 @@ public class Receta extends ActionBarActivity{
     }
 
     public void toggleVieja(View view){
-        view.startAnimation(animScale);
         laVieja = !laVieja;
 
         Drawable drawSpeak;
@@ -160,13 +164,12 @@ public class Receta extends ActionBarActivity{
     }
 
     public void beginRecipe(View view) {
-
-        view.startAnimation(animScale);
+        view.startAnimation(animScaleRectangular);
         mViewPager.setCurrentItem(1);
     }
 
     public void comenzarReceta(View view) {
-        view.startAnimation(animScale);
+        view.startAnimation(animScaleRectangular);
         mViewPager.setCurrentItem(2);
         showButtons();
     }
@@ -200,7 +203,7 @@ public class Receta extends ActionBarActivity{
     }
 
     public  void goBack(View view){
-        view.startAnimation(animScale);
+        view.startAnimation(animScaleSutile);
         if (mViewPager.getCurrentItem() > 0 ){
             mViewPager.setCurrentItem(0);
             hideButtons();
@@ -211,7 +214,7 @@ public class Receta extends ActionBarActivity{
     }
 
     public void recetaPrev(View view){
-        view.startAnimation(animScale);
+        view.startAnimation(animScaleSutile);
         int state = mViewPager.getCurrentItem();
         if( state > 2 ){
             state --;
@@ -220,7 +223,7 @@ public class Receta extends ActionBarActivity{
     }
 
     public void recetaNext(View view){
-        view.startAnimation(animScale);
+        view.startAnimation(animScaleSutile);
         int state = mViewPager.getCurrentItem();
         if( state < mSectionsPagerAdapter.getCount() ){
             state ++;
@@ -233,7 +236,8 @@ public class Receta extends ActionBarActivity{
     }
 
     public void selectAllIngredients(View view){
-        view.startAnimation(animScale);
+
+        view.startAnimation(animScaleRectangular);
         ListView listaIngrediente = (ListView) findViewById(R.id.lista_ingredientes);
         int totalIngredientes = listaIngrediente.getChildCount();
         Button selectAllButton = (Button) findViewById(R.id.select_all);
@@ -258,7 +262,8 @@ public class Receta extends ActionBarActivity{
     }
 
     public void carrito_ingredientes(View view) {
-        view.startAnimation(animScale);
+
+        view.startAnimation(animScaleRectangular);
         ListView listaIngrediente = (ListView) findViewById(R.id.lista_ingredientes);
         int totalIngredientes = listaIngrediente.getChildCount();
         for (int i = 0; i < totalIngredientes; i++){
@@ -268,7 +273,7 @@ public class Receta extends ActionBarActivity{
                 //MainApplication.getInstance().shoppingList.add(laReceta.ingredientes.get(i));
             }
         }
-        Toast.makeText(this, "Ingredientes agregados a la lista de compras", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Los ingredientes no disponibles se agregaron a la lista de compras", Toast.LENGTH_LONG).show();
     }
 
     public void validateCheckbox(){
@@ -296,7 +301,7 @@ public class Receta extends ActionBarActivity{
     }
 
     public void onCameraClick(View view){
-        view.startAnimation(animScale);
+        view.startAnimation(animScaleSutile);
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         startActivity(intent);
     }

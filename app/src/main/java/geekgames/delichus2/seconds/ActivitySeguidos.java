@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +35,7 @@ public class ActivitySeguidos extends ActionBarActivity {
     private SeguidoAdapter mAdapter;
     int idUser;
     private String currentHeader = "";
-    TextView loading;
+    ListView cargadas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class ActivitySeguidos extends ActionBarActivity {
         ListView listView = (ListView) findViewById(R.id.list_seguidos);
         listView.setAdapter(mAdapter);
         setTitle("Personas que sigues");
-        loading = (TextView) findViewById(R.id.loading_seguidos);
+        cargadas = (ListView) findViewById(R.id.list_seguidos);
 
         final SharedPreferences app_preferences =
                 PreferenceManager.getDefaultSharedPreferences(getBaseContext());
@@ -101,14 +102,15 @@ public class ActivitySeguidos extends ActionBarActivity {
                             currentHeader = "";
                             List<Seguido> segsRecords = parse(jsonObject);
 
-                            AlphaAnimation animate = new AlphaAnimation(1,0);
-                            animate.setDuration(250);
+                            AlphaAnimation animate_apear = new AlphaAnimation(0,1);
+                            animate_apear.setDuration(400);
 
-                            animate.setFillAfter(true);
-                            loading.startAnimation(animate);
-                            loading.setVisibility(View.GONE);
+
+                            animate_apear.setFillAfter(true);
+                            cargadas.startAnimation(animate_apear);
 
                             mAdapter.swapRecords(segsRecords);
+                            Toast.makeText(getApplicationContext(), "Cargando usuarios seguidos", Toast.LENGTH_SHORT).show();
 
                         }
                         catch(JSONException e) {

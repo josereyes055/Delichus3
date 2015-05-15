@@ -56,7 +56,7 @@ public class MainApplication extends Application {
         super.onCreate();
 
         mRequestQueue = Volley.newRequestQueue(this);
-        mp = MediaPlayer.create(this,R.raw.sonido_boton);
+        mp = MediaPlayer.create(this,R.raw.favoritos);
 
         sInstance = this;
     }

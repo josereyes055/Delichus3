@@ -9,69 +9,111 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="10dp"
         android:layout_weight="1">
 
         <include layout="@layout/splash_screen" />
 
     </LinearLayout>
 
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
         android:orientation="vertical"
-        android:layout_weight="1">
+        android:gravity="center">
 
-        <EditText
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:id="@+id/txtUsuario"
+                android:background="#fff" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:inputType="textEmailAddress"
-            android:ems="10"
-            android:id="@+id/txtUsuario"
-            android:background="#fff"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
 
-        <EditText
+            <EditText
+                android:layout_width="wrap_content"
+                android:padding="5dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:background="#fff"
+                android:ems="10"
+                android:id="@+id/txtPass" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:padding="5dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:background="#fff"
-            android:ems="10"
-            android:id="@+id/txtPass"
-            android:layout_below="@+id/txtUsuario"
-            android:layout_marginTop="30dp" />
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
 
-        <Button
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Entrar"
+                android:id="@+id/button"
+                android:onClick="access"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Entrar"
-            android:id="@+id/button"
-            android:layout_below="@+id/txtPass"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
-            android:onClick="access"/>
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
 
-        <Button
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"
-            android:text="Registrarse"
-            android:id="@+id/registro"
-            android:layout_below="@+id/button"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
-            android:onClick="ir_registro"/>
+            <Button
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:text="Registrarse"
+                android:id="@+id/registro"
+                android:onClick="ir_registro"/>
 
-        <com.facebook.login.widget.LoginButton
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <com.facebook.login.widget.LoginButton
             android:id="@+id/facebookButton"
             android:layout_width="180dp"
-            android:layout_height="38dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
             />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center" ></LinearLayout>
+
+
 
     </LinearLayout>
 

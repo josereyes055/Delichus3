@@ -60,7 +60,7 @@ public class PasoFragment extends Fragment{
 
         TextView tipo = (TextView)laView.findViewById(R.id.paso_tipo);
         TextView descripcion = (TextView)laView.findViewById(R.id.paso_descripcion);
-        TextView tiempo = (TextView)laView.findViewById(R.id.paso_tiempo);
+        //TextView tiempo = (TextView)laView.findViewById(R.id.paso_tiempo);
         TwoWayView slider = (TwoWayView)laView.findViewById(R.id.fotosPasos);
         slider.setAdapter(mAdapter);
 
@@ -103,7 +103,7 @@ public class PasoFragment extends Fragment{
 
                 tipo.setText(elTipo);
                 descripcion.setText(paso.getString("paso"));
-                tiempo.setText("tiempo: " + paso.getInt("tiempo"));
+               // tiempo.setText("tiempo: " + paso.getInt("tiempo"));
             }
 
         } catch (JSONException e) {
