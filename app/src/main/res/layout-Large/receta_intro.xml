@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="fill_parent"
-    android:layout_width="fill_parent"
-    android:orientation="vertical">
 
 <ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:id="@+id/scrolldemierda"
     android:layout_height="wrap_content">
@@ -39,13 +36,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="@dimen/compartida_por"
             android:text="compartida por: "/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="@dimen/compartida_por"
             android:text="Delichus"
             android:textStyle="bold"
             android:textColor="@color/base"
@@ -84,7 +81,7 @@
             android:text="Fácil"
             android:layout_marginRight="20dp"
             android:id="@+id/dificultad_receta"
-            android:textSize="18dp"/>
+            android:textSize="@dimen/atributos_receta"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -98,7 +95,7 @@
             android:id="@+id/tiempo_receta"
             android:layout_marginRight="20dp"
             android:text="20 mins"
-            android:textSize="18dp"/>
+            android:textSize="@dimen/atributos_receta"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -112,14 +109,14 @@
             android:id="@+id/cantidad_personas_receta"
             android:text="4"
             android:layout_marginLeft="-10dp"
-            android:textSize="18dp"/>
+            android:textSize="@dimen/atributos_receta"/>
 
         </LinearLayout>
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textSize="32dp"
+            android:textSize="@dimen/titulo_receta"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:id="@+id/receta_nombre"
@@ -135,7 +132,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/receta_larga"
         android:textColor="@color/gris_oscuro"
-        android:textSize="22dp"
+        android:textSize="@dimen/descripción_larga"
         android:gravity="center"
         android:lineSpacingExtra="5dp"
         android:text="@string/lorem"/>
@@ -150,11 +147,11 @@
         android:background="@android:color/darker_gray"/>
 
     <TextView
-        android:paddingTop="20dp"
+        android:layout_marginTop="15dp"
         android:paddingBottom="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="32dp"
+        android:textSize="@dimen/titulo_receta"
         android:textColor="@color/naranja"
         android:text="Ingredientes"
         />
@@ -165,7 +162,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lineSpacingExtra="5dp"
-            android:textSize="18dp"
+            android:textSize="@dimen/sub_ingrediente"
             android:textColor="@color/gris_sub"
            android:gravity="center"
             android:text="Selecciona los ingredientes que ya tienes,
@@ -186,7 +183,7 @@ los que no selecciones puedes agregarlos a la lista de compras"
             android:textColor="@color/blanco"
             android:background="@color/verde"
             android:enabled="true"
-            android:textSize="22dp"
+            android:textSize="@dimen/texto_botones"
             android:layout_gravity="left"
             android:layout_marginLeft="20dp"
             android:textAllCaps="false"
@@ -198,7 +195,7 @@ los que no selecciones puedes agregarlos a la lista de compras"
             android:text="Agregar a lista de compras"
             android:textColor="@color/blanco"
             android:background="@color/verde"
-            android:textSize="22dp"
+            android:textSize="@dimen/texto_botones"
             android:layout_gravity="left"
             android:layout_marginLeft="35dp"
             android:textAllCaps="false"
@@ -213,6 +210,8 @@ los que no selecciones puedes agregarlos a la lista de compras"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="5dp"
                 android:padding="30dp"
+                android:paddingTop="30dp"
+                android:paddingBottom="20dp"
                 android:textSize="22dp"
                 android:transcriptMode="disabled"
                 android:id="@+id/lista_ingredientes"/>
@@ -226,7 +225,7 @@ los que no selecciones puedes agregarlos a la lista de compras"
             android:textColor="@color/blanco"
             android:background="#c4c4c4"
             android:enabled="false"
-            android:textSize="22dp"
+            android:textSize="@dimen/texto_botones"
             android:layout_gravity="center"
             android:textAllCaps="false"
             android:onClick="beginRecipe"/>
@@ -279,7 +278,7 @@ los que no selecciones puedes agregarlos a la lista de compras"
             android:textColor="@color/blanco"
             android:background="@color/verde"
             android:enabled="false"
-            android:textSize="22dp"
+            android:textSize="@dimen/texto_botones"
             android:layout_gravity="center"
             android:textAllCaps="false"/>
 
@@ -294,7 +293,7 @@ los que no selecciones puedes agregarlos a la lista de compras"
             android:paddingBottom="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="32dp"
+            android:textSize="@dimen/titulo_receta"
             android:textColor="@color/naranja"
             android:text="Calificación de la receta"
             />
@@ -304,7 +303,6 @@ los que no selecciones puedes agregarlos a la lista de compras"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:padding="20dp">
-
 
             <TextView
                 android:layout_width="wrap_content"
@@ -319,7 +317,6 @@ los que no selecciones puedes agregarlos a la lista de compras"
                 android:layout_rowSpan="2"
                 android:layout_gravity="center_vertical" />
 
-
             <RatingBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -330,8 +327,6 @@ los que no selecciones puedes agregarlos a la lista de compras"
                 android:layout_row="0"
                 android:layout_gravity="bottom|left" />
 
-
-
             <ImageView
 
                 android:layout_marginLeft="20dp"
@@ -341,7 +336,6 @@ los que no selecciones puedes agregarlos a la lista de compras"
                 android:layout_column="1"
                 android:layout_row="1"
                 android:layout_gravity="top" />
-
 
             <TextView
                 android:paddingBottom="20dp"
@@ -356,9 +350,6 @@ los que no selecciones puedes agregarlos a la lista de compras"
                 android:textColor="@color/gris_sub"
                 android:text="123456"
                 />
-
-
-
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -392,5 +383,3 @@ los que no selecciones puedes agregarlos a la lista de compras"
     </LinearLayout>
 
 </ScrollView>
-
-</LinearLayout>

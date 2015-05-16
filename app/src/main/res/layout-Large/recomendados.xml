@@ -3,50 +3,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_gravity="center_horizontal"
     android:background="@color/fondo"
     >
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_margin="10dp"
-        android:text="Recomendada para ti"
-        android:gravity="center"
-        android:id="@+id/recomendadosTitle"
-        android:textColor="@color/naranja"
-        android:textStyle="bold"
-        android:layout_weight="10"
-        android:textSize="@dimen/section_title" />
-
     <LinearLayout
         android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:id="@+id/recipe_holder">
+        android:layout_weight="1">
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:text="Cargando..."
+            android:layout_weight="1"
+            android:text="Recomendada para ti"
             android:gravity="center"
-            android:textSize="32dp"
-            android:layout_marginBottom="40dp"
+            android:id="@+id/recomendadosTitle"
+            android:textColor="@color/naranja"
             android:textStyle="bold"
+            android:textSize="@dimen/section_title" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cargando..."
+            android:textSize="@dimen/recomended_title"
+            android:textStyle="bold"
+            android:gravity="center"
             android:id="@+id/recipe_nombre"
             android:textColor="@color/gris_oscuro"
             />
 
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/recipe_imagen"
                 android:src="@drawable/img_no_encontrada_recomendado"
@@ -66,12 +69,11 @@
         <geekgames.delichus2.customViews.CircleImage
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_gravity="center"
             android:layout_marginTop="-50dp"
             android:id="@+id/recipe_foto"
             android:src="@drawable/noob"
             android:layout_centerHorizontal="true" />
-
-
 
         <LinearLayout
             android:layout_margin="10dp"
@@ -95,6 +97,7 @@
                 android:id="@+id/recipe_autor" />
         </LinearLayout>
 
+
         <RatingBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -103,17 +106,18 @@
             android:layout_gravity="center"
             android:layout_centerHorizontal="true"/>
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="22dp"
-            android:padding="20dp"
-            android:text=""
-            android:id="@+id/recipe_descripcion"
-            android:gravity="center"
-            android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/grid_recipe_descripcion_recom"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text=""
+                android:id="@+id/recipe_descripcion"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"/>
 
     </LinearLayout>
-
 
 </LinearLayout>
