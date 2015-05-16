@@ -10,8 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp">
-
+        android:layout_marginTop="150dp">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -24,11 +23,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="¿Deseas "
-<<<<<<< HEAD
                 android:textSize="@dimen/texto_activar_ayudante"
-=======
-                android:textSize="40dp"
->>>>>>> origin/master
                 android:textColor="@color/gris_oscuro"
                 android:id="@+id/textView3"
                 android:layout_gravity="center_horizontal" />
@@ -38,11 +33,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="habilitar "
-<<<<<<< HEAD
                 android:textSize="@dimen/texto_activar_ayudante"
-=======
-                android:textSize="40dp"
->>>>>>> origin/master
                 android:id="@+id/textView4"
                 android:textColor="#ffe26f58"
                 android:layout_gravity="center_horizontal" />
@@ -55,11 +46,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="el asistente de cocina?"
             android:id="@+id/textView5"
-<<<<<<< HEAD
             android:textSize="@dimen/texto_activar_ayudante"
-=======
-            android:textSize="40dp"
->>>>>>> origin/master
             android:textColor="@color/gris_oscuro"
             android:layout_gravity="center_horizontal" />
 
@@ -110,22 +97,14 @@
 
     <Button
         android:layout_width="180dp"
-<<<<<<< HEAD
-        android:layout_height="40dp"
-=======
         android:layout_height="60dp"
->>>>>>> origin/master
         android:layout_marginTop="60dp"
         android:text="¡ Comenzar !"
         android:id="@+id/comenzar_receta"
         android:textColor="@color/blanco"
         android:background="@color/verde"
         android:enabled="true"
-<<<<<<< HEAD
         android:textSize="@dimen/texto_botones"
-=======
-        android:textSize="22dp"
->>>>>>> origin/master
         android:layout_gravity="center"
         android:textAllCaps="false"
         android:onClick="comenzarReceta"/>
