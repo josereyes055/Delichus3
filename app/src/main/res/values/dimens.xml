@@ -19,14 +19,14 @@
     <dimen name="titulo_receta">36sp</dimen>
     <dimen name="sub_ingrediente">18sp</dimen>
     <dimen name="ingredientes">24sp</dimen>
-    <dimen name="texto_botones">22sp</dimen>
+    <dimen name="texto_botones">18sp</dimen>
     <dimen name="user_titulo">24sp</dimen>
     <dimen name="rank_numero">80sp</dimen>
     <dimen name="personas_hicieron_receta">20sp</dimen>
 
     <!--Activar ayudante-->
 
-    <dimen name="texto_activar_ayudante">40sp</dimen>
+    <dimen name="texto_activar_ayudante">30sp</dimen>
 
     <!--Perfil-->
 
