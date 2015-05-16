@@ -104,7 +104,7 @@ public class Todas extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                setAllRecipeList(position);
             }
 
             @Override
@@ -115,7 +115,7 @@ public class Todas extends Fragment {
 
 
         //fetch();
-        setAllRecipeList();
+        setAllRecipeList(0);
     }
 
     // Passing the touch event to the opposite list
@@ -136,7 +136,7 @@ public class Todas extends Fragment {
         }
     };
 
-    private void getRecetas(){
+    public void getRecetas(){
         SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String prefArray = app_preferences.getString("recetas", null);
         Log.i("FUCKING DEBUG", prefArray);
@@ -148,32 +148,57 @@ public class Todas extends Fragment {
             }
         }
     }
-    private void setAllRecipeList(){
+    private void setAllRecipeList(int orden){
+
+        SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         if(recetas != null){
             try {
                 lista1 = new ArrayList<Ficha>();
                 lista2 = new ArrayList<Ficha>();
 
-                for(int i =0; i < recetas.length(); i++) {
-                    JSONObject ficha = recetas.getJSONObject(i);
-                    int id = ficha.getInt("id");
-                    String nombre = ficha.getString("receta");
-                    String imagen = ficha.getString("imagen");
-                    int idAutor = Integer.parseInt(ficha.getString("idAutor"));
-                    String autor = ficha.getString("autor");
-                    String foto = ficha.getString("foto");
-                    float puntuacion = Float.parseFloat( ficha.getString("puntuacion") );
-                    String descripcion = ficha.getString("descripcion");
-                    int pasos = ficha.getInt("pasos");
+                JSONArray lista;
+                String prefArray = "";
 
-                    Ficha unaFicha = new Ficha(id, nombre, imagen, idAutor, autor, foto, puntuacion, descripcion, pasos);
-                    if(i%2 == 0) {
-                        lista1.add(unaFicha);
-                    }else{
-                        lista2.add(unaFicha);
-                    }
+                switch (orden){
+                    case 1:
+                        prefArray = app_preferences.getString("listaPuntuacion", null);
+                    break;
+                    case 2:
+                        prefArray = app_preferences.getString("listaNovedad", null);
+                    break;
+                    case 3:
+                        prefArray = app_preferences.getString("listaVegetariana", null);
+                        break;
+                    case 4:
+                        prefArray = app_preferences.getString("listaVegana", null);
+                        break;
+
+                    default:
+                        prefArray = app_preferences.getString("listaDefault", null);
+                    break;
                 }
+
+                lista = new JSONArray(prefArray);
+
+                for (int a = 0; a<lista.length(); a++){
+                    int idPos = lista.getInt(a);
+
+                    for(int i =0; i < recetas.length(); i++) {
+                        int id = recetas.getJSONObject(i).getInt("id");
+
+                        if(id == idPos) {
+                            Ficha unaFicha = crearFicha(i);
+                            if (i % 2 == 0) {
+                                lista1.add(unaFicha);
+                            } else {
+                                lista2.add(unaFicha);
+                            }
+                        }
+                    }
+
+                }
+
 
                 leftAdapter.swapRecipeRecords(lista1);
                 rightAdapter.swapRecipeRecords(lista2);
@@ -185,57 +210,23 @@ public class Todas extends Fragment {
 
     }// end setAllRecipeList
 
-    private void fetch() {
-        JsonObjectRequest request = new JsonObjectRequest(
-                "http://www.geekgames.info/dbadmin/test.php?v=1",
-                null,
-                new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject jsonObject) {
-                                try {
-                                    lista1 = new ArrayList<Ficha>();
-                                    lista2 = new ArrayList<Ficha>();
+    Ficha crearFicha( int index ) throws JSONException {
+        JSONObject ficha = recetas.getJSONObject(index);
+        int id = ficha.getInt("id");
+        String nombre = ficha.getString("receta");
+        String imagen = ficha.getString("imagen");
+        int idAutor = Integer.parseInt(ficha.getString("idAutor"));
+        String autor = ficha.getString("autor");
+        String foto = ficha.getString("foto");
+        float puntuacion = Float.parseFloat( ficha.getString("puntuacion") );
+        String descripcion = ficha.getString("descripcion");
+        int pasos = ficha.getInt("pasos");
 
-
-                            JSONArray Recetas = jsonObject.getJSONArray("recipes");
-
-                            for(int i =0; i < Recetas.length(); i++) {
-                                JSONObject ficha = Recetas.getJSONObject(i);
-                                int id = ficha.getInt("id");
-                                String nombre = ficha.getString("receta");
-                                String imagen = ficha.getString("imagen");
-                                int idAutor = Integer.parseInt(ficha.getString("idAutor"));
-                                String autor = ficha.getString("autor");
-                                String foto = ficha.getString("foto");
-                                float puntuacion = Float.parseFloat( ficha.getString("puntuacion") );
-                                String descripcion = ficha.getString("descripcion");
-                                int pasos = ficha.getInt("pasos");
-
-                                Ficha unaFicha = new Ficha(id, nombre, imagen, idAutor, autor, foto, puntuacion, descripcion, pasos);
-                                if(i%2 == 0) {
-                                    lista1.add(unaFicha);
-                                }else{
-                                    lista2.add(unaFicha);
-                                }
-                            }
-
-                            leftAdapter.swapRecipeRecords(lista1);
-                            rightAdapter.swapRecipeRecords(lista2);
-                        }
-                        catch(JSONException e) {
-                            Toast.makeText(getActivity(), "Unable to parse data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        Toast.makeText(getActivity(), "Unable to fetch data: " + volleyError.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        MainApplication.getInstance().getRequestQueue().add(request);
+        Ficha unaFicha = new Ficha(id, nombre, imagen, idAutor, autor, foto, puntuacion, descripcion, pasos);
+        return unaFicha;
     }
+
+
 
     private List<Recipe> parse(JSONObject json) throws JSONException {
         ArrayList<Recipe> records = new ArrayList<Recipe>();
