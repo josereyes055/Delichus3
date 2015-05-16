@@ -10,11 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-<<<<<<< HEAD
         android:layout_marginTop="100dp">
-=======
-        android:layout_marginTop="150dp">
->>>>>>> origin/master
+
 
         <LinearLayout
             android:orientation="horizontal"
