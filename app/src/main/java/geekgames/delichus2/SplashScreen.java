@@ -59,7 +59,7 @@ public class SplashScreen extends Activity{
                             int versionDB = jsonObject.getInt("version");
                             int versionActual = app_preferences.getInt("versionDB", 0);
 
-                            if( versionActual == 0 || versionActual != versionDB){
+                            if( versionActual != versionDB){
                                 fetchDatabase();
                             }else{
                                 login();
@@ -141,7 +141,7 @@ public class SplashScreen extends Activity{
             startActivity(mainIntent);
         }
         else{
-            MainApplication.getInstance().fetchUserData(user);
+
             TimerTask task = new TimerTask() {
                 @Override
                 public void run() {
