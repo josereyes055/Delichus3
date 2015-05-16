@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ public class Todas extends Fragment {
         return rootView;
     }
 
+    private int listas = 2;
     private ListView listViewLeft;
     private ListView listViewRight;
     private FichaAdapter leftAdapter;
@@ -63,14 +65,24 @@ public class Todas extends Fragment {
         leftAdapter = new FichaAdapter(getActivity());
         rightAdapter = new FichaAdapter(getActivity());
 
+
+        LinearLayout contenedorListas = (LinearLayout) getView().findViewById(R.id.contenedorListas);
+        listas = contenedorListas.getChildCount();
+
         listViewLeft = (ListView) getView().findViewById(R.id.all_list_view_left);
-        listViewRight = (ListView) getView().findViewById(R.id.all_list_view_right);
+
 
         listViewLeft.setAdapter(leftAdapter);
-        listViewRight.setAdapter(rightAdapter);
+
 
         listViewLeft.setOnTouchListener(touchListener);
-        listViewRight.setOnTouchListener(touchListener);
+
+
+        if( listas == 2){
+            listViewRight = (ListView) getView().findViewById(R.id.all_list_view_right);
+            listViewRight.setAdapter(rightAdapter);
+            listViewRight.setOnTouchListener(touchListener);
+        }
         //listViewLeft.setOnScrollListener(scrollListener);
         //listViewRight.setOnScrollListener(scrollListener);
 
@@ -124,14 +136,17 @@ public class Todas extends Fragment {
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            if (v.equals(listViewLeft) && !dispatched) {
-                dispatched = true;
-                listViewRight.dispatchTouchEvent(event);
-            } else if (v.equals(listViewRight) && !dispatched) {
-                dispatched = true;
-                listViewLeft.dispatchTouchEvent(event);
-            } // similarly for listViewThree & listViewFour
-            dispatched = false;
+            if (listas == 2 ) {
+                if (v.equals(listViewLeft) && !dispatched) {
+                    dispatched = true;
+                    listViewRight.dispatchTouchEvent(event);
+                } else if (v.equals(listViewRight) && !dispatched) {
+                    dispatched = true;
+                    listViewLeft.dispatchTouchEvent(event);
+                } // similarly for listViewThree & listViewFour
+                dispatched = false;
+
+            }
             return false;
         }
     };
@@ -189,10 +204,15 @@ public class Todas extends Fragment {
 
                         if(id == idPos) {
                             Ficha unaFicha = crearFicha(i);
-                            if (i % 2 == 0) {
+
+                            if( listas == 2 ) {
+                                if (i % 2 == 0) {
+                                    lista1.add(unaFicha);
+                                } else {
+                                    lista2.add(unaFicha);
+                                }
+                            }else{
                                 lista1.add(unaFicha);
-                            } else {
-                                lista2.add(unaFicha);
                             }
                         }
                     }
@@ -201,7 +221,9 @@ public class Todas extends Fragment {
 
 
                 leftAdapter.swapRecipeRecords(lista1);
-                rightAdapter.swapRecipeRecords(lista2);
+                if (listas == 2) {
+                    rightAdapter.swapRecipeRecords(lista2);
+                }
             }
             catch(JSONException e) {
                 Toast.makeText(getActivity(), "Unable to parse data: " + e.getMessage(), Toast.LENGTH_SHORT).show();

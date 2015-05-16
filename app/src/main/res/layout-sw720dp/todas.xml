@@ -74,6 +74,7 @@
             android:orientation="horizontal"
             android:paddingTop="10dp"
             android:paddingLeft="10dp"
+            android:id="@+id/contenedorListas"
             android:background="@color/fondo"
             android:paddingRight="10dp">
 

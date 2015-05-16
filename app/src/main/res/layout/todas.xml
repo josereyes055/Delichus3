@@ -73,6 +73,7 @@
             android:layout_height="fill_parent"
             android:orientation="horizontal"
             android:paddingTop="10dp"
+            android:id="@+id/contenedorListas"
             android:paddingLeft="10dp"
             android:background="@color/fondo"
             android:paddingRight="10dp">
